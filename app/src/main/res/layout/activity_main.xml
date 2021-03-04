@@ -8,19 +8,18 @@
 
     <TextView
         android:id="@+id/viewsCount"
-        android:layout_width="@dimen/quantity_width"
-        android:layout_height="@dimen/size_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/views"
         app:layout_constraintEnd_toEndOf="@+id/post"
         app:layout_constraintTop_toTopOf="@+id/views"
-        app:layout_constraintVertical_bias="0.0"
         tools:text="@sample/posts.json/data/views" />
 
     <TextView
         android:id="@+id/repostCount"
-        android:layout_width="@dimen/quantity_width"
-        android:layout_height="@dimen/size_button"
-        android:layout_marginStart="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/indent_count"
         app:layout_constraintBottom_toBottomOf="@+id/repost"
         app:layout_constraintStart_toEndOf="@+id/repost"
         app:layout_constraintTop_toTopOf="@+id/repost"
@@ -28,7 +27,7 @@
 
     <ImageView
         android:id="@+id/avatar"
-        android:layout_width="48dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/activity_padding"
         android:layout_marginTop="@dimen/activity_padding"
@@ -41,8 +40,8 @@
 
     <TextView
         android:id="@+id/author"
-        android:layout_width="294dp"
-        android:layout_height="21dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:ellipsize="end"
         android:singleLine="true"
@@ -66,8 +65,8 @@
 
     <ImageButton
         android:id="@+id/options"
-        android:layout_width="@dimen/size_button"
-        android:layout_height="@dimen/size_button"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/activity_padding"
         android:layout_marginEnd="@dimen/activity_padding"
         android:backgroundTint="@android:color/transparent"
@@ -77,6 +76,7 @@
         app:srcCompat="@drawable/ic_baseline_more_vert_24" />
 
     <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrierOne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
@@ -86,16 +86,19 @@
 
     <TextView
         android:id="@+id/post"
-        android:layout_width="377dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/indent_barier"
+        android:layout_marginEnd="@dimen/activity_padding"
         app:layout_constraintBottom_toTopOf="@+id/site"
-        app:layout_constraintEnd_toEndOf="@+id/options"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/avatar"
         app:layout_constraintTop_toBottomOf="@+id/date_of_publication"
         tools:text="@sample/posts.json/data/textPosts" />
 
     <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrierTwo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="300dp"
@@ -106,19 +109,20 @@
 
     <ImageButton
         android:id="@+id/likes"
-        android:layout_width="@dimen/size_button"
-        android:layout_height="@dimen/size_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/indent_barier"
         android:backgroundTint="@android:color/transparent"
         android:contentDescription="@string/app_name"
         app:layout_constraintStart_toStartOf="@+id/post"
-        app:srcCompat="@drawable/ic_baseline_favorite_border_24"
-        tools:layout_editor_absoluteY="272dp" />
+        app:layout_constraintTop_toBottomOf="@+id/site"
+        app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
 
     <TextView
         android:id="@+id/likesCount"
-        android:layout_width="@dimen/quantity_width"
-        android:layout_height="@dimen/size_button"
-        android:layout_marginStart="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/indent_count"
         app:layout_constraintBottom_toBottomOf="@+id/likes"
         app:layout_constraintStart_toEndOf="@+id/likes"
         app:layout_constraintTop_toTopOf="@+id/likes"
@@ -126,8 +130,8 @@
 
     <ImageButton
         android:id="@+id/repost"
-        android:layout_width="@dimen/size_button"
-        android:layout_height="@dimen/size_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:backgroundTint="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="@+id/likes"
@@ -147,14 +151,13 @@
 
     <ImageButton
         android:id="@+id/views"
-        android:layout_width="@dimen/size_button"
-        android:layout_height="@dimen/size_button"
-        android:layout_marginEnd="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/indent_count"
         android:backgroundTint="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="@+id/repostCount"
         app:layout_constraintEnd_toStartOf="@+id/viewsCount"
         app:layout_constraintTop_toTopOf="@+id/repostCount"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_baseline_visibility_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
