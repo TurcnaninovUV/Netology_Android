@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_padding">16dp</dimen>
+    <dimen name="size_button">24dp</dimen>
+    <dimen name="quantity_width">50dp</dimen>
+</resources>
