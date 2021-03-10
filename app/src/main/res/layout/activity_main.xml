@@ -17,6 +17,7 @@
         app:layout_constraintBottom_toBottomOf="@id/barrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_netology"
         tools:srcCompat="@drawable/ic_netology" />
 
     <TextView
@@ -67,7 +68,7 @@
         tools:layout_editor_absoluteY="80dp" />
 
     <TextView
-        android:id="@+id/post"
+        android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autoLink="web"
@@ -81,17 +82,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="post"
+        app:constraint_referenced_ids="content"
         tools:layout_editor_absoluteX="27dp"
         tools:layout_editor_absoluteY="236dp" />
 
     <ImageButton
-        android:id="@+id/likes"
+        android:id="@+id/like"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/transparent"
         android:contentDescription="@string/app_name"
-        app:layout_constraintStart_toStartOf="@+id/post"
+        app:layout_constraintStart_toStartOf="@+id/content"
         app:layout_constraintTop_toBottomOf="@id/barrierTwo"
         app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
 
@@ -99,9 +100,9 @@
         android:id="@+id/likesCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/likes"
-        app:layout_constraintStart_toEndOf="@+id/likes"
-        app:layout_constraintTop_toTopOf="@+id/likes"
+        app:layout_constraintBottom_toBottomOf="@+id/like"
+        app:layout_constraintStart_toEndOf="@+id/like"
+        app:layout_constraintTop_toTopOf="@+id/like"
         tools:text="@sample/posts.json/data/likes" />
 
     <ImageButton
@@ -110,9 +111,9 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/transparent"
         android:contentDescription="@string/description_post_repost"
-        app:layout_constraintBottom_toBottomOf="@+id/likes"
+        app:layout_constraintBottom_toBottomOf="@+id/like"
         app:layout_constraintStart_toEndOf="@+id/likesCount"
-        app:layout_constraintTop_toTopOf="@+id/likes"
+        app:layout_constraintTop_toTopOf="@+id/like"
         app:srcCompat="@drawable/ic_baseline_share_24" />
 
     <ImageButton
@@ -140,7 +141,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/views"
-        app:layout_constraintEnd_toEndOf="@+id/post"
+        app:layout_constraintEnd_toEndOf="@+id/content"
         app:layout_constraintTop_toTopOf="@+id/views"
         tools:text="@sample/posts.json/data/views" />
 
