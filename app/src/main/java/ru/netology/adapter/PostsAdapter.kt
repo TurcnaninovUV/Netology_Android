@@ -1,10 +1,9 @@
 package ru.netology.adapter
 
-
-import android.content.ContentValues.TAG
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.R
 import ru.netology.databinding.CardPostBinding
@@ -13,27 +12,20 @@ import ru.netology.dto.Post
 typealias OnLikeListener = (post: Post) -> Unit
 typealias OnRepostListener = (post: Post) -> Unit
 
-class PostsAdapter(private val onLikeListener: OnLikeListener, private val onRepostListener: OnRepostListener) : RecyclerView.Adapter<PostViewHolder>() {
-
-    var list = emptyList<Post>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
+class PostsAdapter(
+        private val onLikeListener: OnLikeListener,
+        private val onRepostListener: OnRepostListener
+) : ListAdapter<Post, PostViewHolder>(PostViewHolder.PostDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PostViewHolder(binding, onLikeListener, onRepostListener)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        val post = list[position]
+        val post = getItem(position)
         holder.bind(post)
     }
-
-    override fun getItemCount(): Int = list.size
 }
-
 
 class PostViewHolder(
         private val binding: CardPostBinding,
@@ -67,6 +59,16 @@ class PostViewHolder(
             (count in 10_000..999_999) -> "${count / 1000}K"
             else -> count
         }.toString()
+    }
+
+    class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
+        override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
+            return oldItem == newItem
+        }
     }
 }
 
