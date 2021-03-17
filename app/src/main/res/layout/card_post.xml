@@ -91,7 +91,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/transparent"
-        android:contentDescription="@string/app_name"
+        android:contentDescription="@string/description_post_like"
         app:layout_constraintStart_toStartOf="@+id/content"
         app:layout_constraintTop_toBottomOf="@id/barrierTwo"
         app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
@@ -110,7 +110,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/transparent"
-        android:contentDescription="@string/description_post_repost"
+        android:contentDescription="@string/description_post_share"
         app:layout_constraintBottom_toBottomOf="@+id/like"
         app:layout_constraintStart_toEndOf="@+id/likesCount"
         app:layout_constraintTop_toTopOf="@+id/like"
