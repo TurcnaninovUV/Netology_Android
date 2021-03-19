@@ -1,6 +1,7 @@
 package ru.netology.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
@@ -64,7 +65,7 @@ class PostViewHolder(
                     }
                 }.show()
             }
-
+R.id.groupEditText. = View.VISIBLE
             like.setOnClickListener {
                 onInteractionListener.onLike(post)
             }

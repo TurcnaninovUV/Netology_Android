@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,27 +20,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="top"
-        app:constraint_referenced_ids="content,save" />
+        app:constraint_referenced_ids="content,save,edition,closeEdit,imageEdit"
+        tools:layout_editor_absoluteY="691dp" />
 
     <EditText
         android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/post_text"
-        android:inputType="textMultiLine"
+        android:layout_marginStart="16dp"
         android:background="@android:color/transparent"
-        android:padding="@dimen/activity_padding"
+        android:hint="@string/post_text"
         android:importantForAutofill="no"
-        app:layout_constraintTop_toTopOf="@id/toolsTop"
+        android:inputType="textMultiLine"
+        android:padding="@dimen/activity_padding"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/save"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_padding"
         android:layout_marginBottom="@dimen/activity_padding"
         android:background="@android:color/transparent"
         android:contentDescription="@string/description_post_like"
@@ -49,4 +49,52 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/content"
         app:srcCompat="@drawable/ic_baseline_done_24" />
+
+    <TextView
+        android:id="@+id/edition"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_padding"
+        android:layout_marginTop="@dimen/activity_padding"
+        android:layout_marginBottom="@dimen/activity_padding"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/description_post_like"
+        android:text="Edit message"
+        app:layout_constraintBottom_toTopOf="@+id/content"
+        app:layout_constraintEnd_toStartOf="@+id/closeEdit"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageEdit"
+        app:layout_constraintTop_toBottomOf="@id/toolsTop" />
+
+    <ImageButton
+        android:id="@+id/closeEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/edition"
+        app:layout_constraintEnd_toEndOf="@+id/save"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/edition"
+        app:layout_constraintTop_toTopOf="@+id/edition"
+        app:srcCompat="@drawable/ic_baseline_clear_24" />
+
+    <ImageButton
+        android:id="@+id/imageEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_padding"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/edition"
+        app:layout_constraintEnd_toStartOf="@+id/edition"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edition"
+        app:srcCompat="@drawable/ic_baseline_create_24" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="imageEdit,closeEdit,edition"
+        app:layout_constraintTop_toTopOf="@+id/edition" />
 </androidx.constraintlayout.widget.ConstraintLayout>
