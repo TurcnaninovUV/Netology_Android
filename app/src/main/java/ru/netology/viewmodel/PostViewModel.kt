@@ -1,7 +1,9 @@
 package ru.netology.viewmodel
 
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.android.synthetic.main.activity_main.view.*
 import ru.netology.dto.Post
 import ru.netology.repository.PostRepository
 import ru.netology.repository.PostRepositoryInMemoryImpl
@@ -40,4 +42,5 @@ class PostViewModel : ViewModel() {
         }
         edited.value = edited.value?.copy(content = text)
     }
+
 }

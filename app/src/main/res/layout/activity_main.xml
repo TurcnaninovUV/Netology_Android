@@ -13,21 +13,22 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/toolsTop"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="113dp"
         tools:listitem="@layout/card_post" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/toolsTop"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:barrierDirection="top"
-        app:constraint_referenced_ids="content,save,edition,closeEdit,imageEdit"
+        app:constraint_referenced_ids="content,save,editionText,closeEdit,imageEdit"
         tools:layout_editor_absoluteY="691dp" />
 
     <EditText
         android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:background="@android:color/transparent"
         android:hint="@string/post_text"
         android:importantForAutofill="no"
@@ -51,31 +52,29 @@
         app:srcCompat="@drawable/ic_baseline_done_24" />
 
     <TextView
-        android:id="@+id/edition"
+        android:id="@+id/editionText"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="19dp"
         android:layout_marginStart="@dimen/activity_padding"
-        android:layout_marginTop="@dimen/activity_padding"
-        android:layout_marginBottom="@dimen/activity_padding"
         android:background="@android:color/transparent"
         android:contentDescription="@string/description_post_like"
-        android:text="Edit message"
+        android:text="@string/text_edit"
         app:layout_constraintBottom_toTopOf="@+id/content"
         app:layout_constraintEnd_toStartOf="@+id/closeEdit"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageEdit"
-        app:layout_constraintTop_toBottomOf="@id/toolsTop" />
+        app:layout_constraintStart_toEndOf="@+id/imageEdit" />
 
     <ImageButton
         android:id="@+id/closeEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="@+id/edition"
+        android:contentDescription="@string/description_close_edit"
+        app:layout_constraintBottom_toBottomOf="@+id/editionText"
         app:layout_constraintEnd_toEndOf="@+id/save"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/edition"
-        app:layout_constraintTop_toTopOf="@+id/edition"
+        app:layout_constraintStart_toEndOf="@+id/editionText"
+        app:layout_constraintTop_toTopOf="@+id/editionText"
         app:srcCompat="@drawable/ic_baseline_clear_24" />
 
     <ImageButton
@@ -84,17 +83,20 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/activity_padding"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="@+id/edition"
-        app:layout_constraintEnd_toStartOf="@+id/edition"
+        app:layout_constraintBottom_toBottomOf="@+id/editionText"
+        app:layout_constraintEnd_toStartOf="@+id/editionText"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edition"
+        app:layout_constraintTop_toTopOf="@+id/editionText"
         app:srcCompat="@drawable/ic_baseline_create_24" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/groupEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="imageEdit,closeEdit,edition"
-        app:layout_constraintTop_toTopOf="@+id/edition" />
+        android:visibility="gone"
+        app:constraint_referenced_ids="imageEdit,closeEdit,editionText"
+        app:layout_constraintEnd_toEndOf="@+id/closeEdit"
+        app:layout_constraintTop_toTopOf="@+id/editionText"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

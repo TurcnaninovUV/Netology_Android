@@ -59,13 +59,11 @@ class PostViewHolder(
                                 onInteractionListener.onEdit(post)
                                 true
                             }
-
                             else -> false
                         }
                     }
                 }.show()
             }
-R.id.groupEditText. = View.VISIBLE
             like.setOnClickListener {
                 onInteractionListener.onLike(post)
             }
