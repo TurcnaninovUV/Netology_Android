@@ -43,9 +43,11 @@ class PostViewHolder(
             content.text = post.content
             likesCount.text = reduction(post.likes)
             repostCount.text = reduction(post.repost)
-            like.setImageResource(
-                    if (post.likedByMe) R.drawable.ic_baseline_favorite_24 else R.drawable.ic_baseline_favorite_border_24
-            )
+            like.isChecked = post.likedByMe
+            repost.isChecked = post.repostByMe
+//            like.setImageResource(
+//                    if (post.likedByMe) R.drawable.ic_baseline_favorite_24 else R.drawable.ic_baseline_favorite_border_24
+//            )
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.options_post)

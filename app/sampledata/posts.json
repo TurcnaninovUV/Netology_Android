@@ -9,6 +9,8 @@
       "site" : "http://netolo.gy/fyb/",
       "likes" : "241.5K",
       "repost" : "100",
+      "likedByMe": true,
+      "repostByMe": true,
       "views" : "125.4K"
     }
   ]

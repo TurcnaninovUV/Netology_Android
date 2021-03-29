@@ -114,7 +114,9 @@ class PostRepositoryInMemoryImpl : PostRepository {
 
     override fun repost(id: Long) {
         posts = posts.map {
-            if (it.id != id) it else it.copy(repost = it.repost + 1)
+            if (it.id != id) it else it.copy(
+                    repostByMe = !it.repostByMe,
+                    repost = if (!it.repostByMe) it.repost + 1 else it.repost - 1)
         }
         data.value = posts
     }

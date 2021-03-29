@@ -86,15 +86,29 @@
         tools:layout_editor_absoluteX="27dp"
         tools:layout_editor_absoluteY="236dp" />
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/like"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/transparent"
+        android:checkable="true"
         android:contentDescription="@string/description_post_like"
-        app:layout_constraintStart_toStartOf="@+id/content"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrierTwo"
-        app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
+        app:icon="@drawable/ic_like_24dp"
+        tools:checked="@sample/posts.json/data/likedByMe"
+        tools:text="@sample/posts.json/data/likes"
+        style="@style/Widget.AppTheme.LikeButton"
+        />
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/like"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:backgroundTint="@android:color/transparent"-->
+<!--        android:contentDescription="@string/description_post_like"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/content"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/barrierTwo"-->
+<!--        app:srcCompat="@drawable/ic_baseline_favorite_border_24" />-->
 
     <TextView
         android:id="@+id/likesCount"
@@ -105,16 +119,29 @@
         app:layout_constraintTop_toTopOf="@+id/like"
         tools:text="@sample/posts.json/data/likes" />
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/repost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/transparent"
+        android:checkable="true"
+        android:layout_marginStart="@dimen/activity_padding"
         android:contentDescription="@string/description_post_share"
-        app:layout_constraintBottom_toBottomOf="@+id/like"
-        app:layout_constraintStart_toEndOf="@+id/likesCount"
-        app:layout_constraintTop_toTopOf="@+id/like"
-        app:srcCompat="@drawable/ic_baseline_share_24" />
+        tools:checked="@sample/posts.json/data/likedByMe"
+        app:layout_constraintStart_toEndOf="@+id/like"
+        app:layout_constraintTop_toBottomOf="@id/barrierTwo"
+        app:icon="@drawable/ic_share_24dp"
+        style="@style/Widget.AppTheme.LikeButton"
+        />
+<!--    <ImageButton-->
+<!--        android:id="@+id/repost"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:backgroundTint="@android:color/transparent"-->
+<!--        android:contentDescription="@string/description_post_share"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/like"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/likesCount"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/like"-->
+<!--        app:srcCompat="@drawable/ic_baseline_share_24" />-->
 
     <ImageButton
         android:id="@+id/views"
