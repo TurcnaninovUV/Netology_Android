@@ -5,7 +5,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.observe
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.card_post.*
+import kotlinx.android.synthetic.main.card_post.menu
+import kotlinx.android.synthetic.main.card_post.view.*
 import ru.netology.R
 import ru.netology.adapter.OnInteractionListener
 import ru.netology.adapter.PostsAdapter
@@ -42,11 +47,11 @@ class MainActivity : AppCompatActivity() {
         })
 
         binding.list.adapter = adapter
-        viewModel.data.observe(this, { posts ->
+        viewModel.data.observe(this) { posts ->
             adapter.submitList(posts)
-        })
+        }
 
-        viewModel.edited.observe(this, { post ->
+        viewModel.edited.observe(this) { post ->
             if (post.id == 0L) {
                 return@observe
             }
@@ -54,7 +59,7 @@ class MainActivity : AppCompatActivity() {
                 requestFocus()
                 setText(post.content)
             }
-        })
+        }
 
         binding.closeEdit.setOnClickListener {
             with(binding.content) {
@@ -86,6 +91,7 @@ class MainActivity : AppCompatActivity() {
                 AndroidUtils.hideKeyboard(this)
             }
         }
+
     }
 
 

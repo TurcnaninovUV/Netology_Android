@@ -7,6 +7,7 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.card_post.*
 import ru.netology.R
 import ru.netology.databinding.CardPostBinding
 import ru.netology.dto.Post
@@ -45,9 +46,7 @@ class PostViewHolder(
             repostCount.text = reduction(post.repost)
             like.isChecked = post.likedByMe
             repost.isChecked = post.repostByMe
-//            like.setImageResource(
-//                    if (post.likedByMe) R.drawable.ic_baseline_favorite_24 else R.drawable.ic_baseline_favorite_border_24
-//            )
+            menu.isChecked
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.options_post)
@@ -61,10 +60,13 @@ class PostViewHolder(
                                 onInteractionListener.onEdit(post)
                                 true
                             }
-                            else -> false
+                            else ->
+                                false
                         }
                     }
+
                 }.show()
+
             }
             like.setOnClickListener {
                 onInteractionListener.onLike(post)
