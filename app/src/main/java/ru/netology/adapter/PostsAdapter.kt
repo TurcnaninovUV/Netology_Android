@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.core.view.forEach
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -42,8 +43,8 @@ class PostViewHolder(
             author.text = post.author
             published.text = post.published
             content.text = post.content
-            likesCount.text = reduction(post.likes)
-            repostCount.text = reduction(post.repost)
+            like.setText(reduction(post.likes))
+            repost.setText(reduction(post.repost))
             like.isChecked = post.likedByMe
             repost.isChecked = post.repostByMe
             menu.isChecked
@@ -60,13 +61,10 @@ class PostViewHolder(
                                 onInteractionListener.onEdit(post)
                                 true
                             }
-                            else ->
-                                false
+                            else -> false
                         }
                     }
-
                 }.show()
-
             }
             like.setOnClickListener {
                 onInteractionListener.onLike(post)

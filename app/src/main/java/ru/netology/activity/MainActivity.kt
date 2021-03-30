@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onRepost(post: Post) {
-                viewModel.share(post.id)
+                viewModel.repost(post.id)
             }
         })
 

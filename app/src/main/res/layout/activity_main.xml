@@ -42,6 +42,7 @@
         android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/checkbox_padding_start"
         android:layout_marginEnd="@dimen/activity_padding"
         android:layout_marginBottom="@dimen/activity_padding"
         android:background="@android:color/transparent"
@@ -62,12 +63,14 @@
         app:layout_constraintBottom_toTopOf="@+id/content"
         app:layout_constraintEnd_toStartOf="@+id/closeEdit"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageEdit" />
+        app:layout_constraintStart_toEndOf="@+id/imageEdit"
+        app:layout_constraintTop_toBottomOf="@+id/list" />
 
     <ImageButton
         android:id="@+id/closeEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/description_close_edit"
         app:layout_constraintBottom_toBottomOf="@+id/editionText"
@@ -83,6 +86,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/activity_padding"
         android:background="@android:color/transparent"
+        android:contentDescription="@string/description_logo_edit"
         app:layout_constraintBottom_toBottomOf="@+id/editionText"
         app:layout_constraintEnd_toStartOf="@+id/editionText"
         app:layout_constraintHorizontal_bias="0.5"
