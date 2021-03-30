@@ -54,10 +54,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/activity_padding"
-        android:backgroundTint="@android:color/transparent"
-        android:checkable="true"
         android:contentDescription="@string/description_post_menu"
-        app:icon="@drawable/ic_more_24"
+        app:icon="@drawable/ic_baseline_more_vert_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/author" />
 
@@ -90,17 +88,14 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/like"
-        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        style="@style/Widget.AppTheme.LikeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/icon_button_padding_top"
         android:layout_marginBottom="@dimen/checkbox_padding_start"
         android:checkable="true"
         android:contentDescription="@string/description_post_like"
-        android:textColor="@color/text_tint"
-        app:backgroundTint="@android:color/transparent"
         app:icon="@drawable/ic_like_24dp"
-        app:iconTint="@color/like_checkbox_tint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/content"
         app:layout_constraintTop_toBottomOf="@id/barrierTwo"
@@ -109,19 +104,15 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/repost"
-        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        style="@style/Widget.AppTheme.LikeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/checkbox_padding_start"
-        android:checkable="true"
         android:contentDescription="@string/description_post_share"
-        android:textColor="@color/text_tint"
-        app:backgroundTint="@android:color/transparent"
-        app:icon="@drawable/ic_share_24dp"
+        app:icon="@drawable/ic_baseline_share_grey24"
         app:iconTint="@color/like_checkbox_tint"
         app:layout_constraintStart_toEndOf="@+id/like"
         app:layout_constraintTop_toTopOf="@+id/like"
-        tools:checked="@sample/posts.json/data/repostByMe"
         tools:text="@sample/posts.json/data/repost" />
 
     <ImageButton

@@ -46,8 +46,6 @@ class PostViewHolder(
             like.setText(reduction(post.likes))
             repost.setText(reduction(post.repost))
             like.isChecked = post.likedByMe
-            repost.isChecked = post.repostByMe
-            menu.isChecked
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.options_post)
