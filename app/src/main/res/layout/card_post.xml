@@ -110,7 +110,6 @@
         android:layout_marginStart="@dimen/checkbox_padding_start"
         android:contentDescription="@string/description_post_share"
         app:icon="@drawable/ic_baseline_share_grey24"
-        app:iconTint="@color/like_checkbox_tint"
         app:layout_constraintStart_toEndOf="@+id/like"
         app:layout_constraintTop_toTopOf="@+id/like"
         tools:text="@sample/posts.json/data/repost" />
