@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ru.netology">
 
     <application
@@ -25,7 +26,20 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.NewPostActivity" android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name=".activity.NewPostActivity"
+            android:windowSoftInputMode="stateVisible" />
+
+        <activity android:name=".activity.EditPostActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

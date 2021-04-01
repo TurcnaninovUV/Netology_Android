@@ -2,18 +2,16 @@ package ru.netology.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
 import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
+import kotlinx.android.synthetic.main.activity_new_post.*
 import ru.netology.R
 import ru.netology.adapter.OnInteractionListener
 import ru.netology.adapter.PostsAdapter
 import ru.netology.databinding.ActivityMainBinding
 import ru.netology.dto.Post
-import ru.netology.util.AndroidUtils
 import ru.netology.viewmodel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -63,6 +61,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.save()
         }
 
+
         binding.fab.setOnClickListener {
             newPostLauncher.launch()
         }
@@ -71,7 +70,25 @@ class MainActivity : AppCompatActivity() {
             if (post.id == 0L) {
                 return@observe
             }
+
+            val intentEditText = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, post.content)
+                type = "text/plain"
+            }
+
+            val newEditLauncher = registerForActivityResult(EditPostResultContract()) { result ->
+                intent.putExtra("editText", intentEditText)
+                result ?: return@registerForActivityResult
+                viewModel.changeContent(result)
+                viewModel.save()
+            }
+            newEditLauncher.launch()
+
         }
+    }
+}
+
 
 //        binding.closeEdit.setOnClickListener {
 //            with(binding.content) {
@@ -104,10 +121,10 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 
-    }
 
 
-}
+
+
 
 
 

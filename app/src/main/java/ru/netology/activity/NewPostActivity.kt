@@ -4,6 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_new_post.*
+import ru.netology.R
 import ru.netology.databinding.ActivityNewPostBinding
 
 class NewPostActivity : AppCompatActivity() {
@@ -11,7 +15,7 @@ class NewPostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityNewPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.edit.requestFocus();
+        binding.edit.requestFocus()
         binding.ok.setOnClickListener {
             val intent = Intent()
             if (binding.edit.text.isNullOrBlank()) {
