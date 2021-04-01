@@ -17,7 +17,7 @@ interface OnInteractionListener {
     fun onLike(post: Post) {}
     fun onEdit(post: Post) {}
     fun onRemove(post: Post) {}
-    fun onRepost(post: Post) {}
+    fun onShare(post: Post) {}
 }
 
 class PostsAdapter(
@@ -43,8 +43,8 @@ class PostViewHolder(
             author.text = post.author
             published.text = post.published
             content.text = post.content
-            like.setText(reduction(post.likes))
-            repost.setText(reduction(post.repost))
+            like.text = reduction(post.likes)
+            repost.text = reduction(post.repost)
             like.isChecked = post.likedByMe
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
@@ -68,7 +68,7 @@ class PostViewHolder(
                 onInteractionListener.onLike(post)
             }
             repost.setOnClickListener {
-                onInteractionListener.onRepost(post)
+                onInteractionListener.onShare(post)
             }
         }
     }
