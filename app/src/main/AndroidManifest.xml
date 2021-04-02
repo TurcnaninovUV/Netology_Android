@@ -26,20 +26,7 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.NewAndEditPostActivity"
-            android:windowSoftInputMode="stateVisible" />
-
-        <activity android:name=".activity.EditPostActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="text/plain" />
-            </intent-filter>
-        </activity>
-
+        <activity android:name=".activity.NewAndEditPostActivity" android:windowSoftInputMode="stateVisible" />
     </application>
 
 </manifest>
