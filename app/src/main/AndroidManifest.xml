@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.NewPostActivity"
+            android:name=".activity.NewAndEditPostActivity"
             android:windowSoftInputMode="stateVisible" />
 
         <activity android:name=".activity.EditPostActivity">

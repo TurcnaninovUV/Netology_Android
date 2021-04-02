@@ -10,12 +10,14 @@ import kotlinx.android.synthetic.main.activity_new_post.*
 import ru.netology.R
 import ru.netology.databinding.ActivityNewPostBinding
 
-class NewPostActivity : AppCompatActivity() {
+class NewAndEditPostActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityNewPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.edit.requestFocus()
+        val text = intent.getStringExtra(Intent.EXTRA_TEXT)
+        binding.edit.setText(text)
         binding.ok.setOnClickListener {
             val intent = Intent()
             if (binding.edit.text.isNullOrBlank()) {
