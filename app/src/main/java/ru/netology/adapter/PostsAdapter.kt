@@ -18,6 +18,7 @@ interface OnInteractionListener {
     fun onEdit(post: Post) {}
     fun onRemove(post: Post) {}
     fun onShare(post: Post) {}
+    fun onPlay(post: Post) {}
 }
 
 class PostsAdapter(
@@ -56,9 +57,6 @@ class PostViewHolder(
                                 true
                             }
                             R.id.edit -> {
-
-
-
                                 onInteractionListener.onEdit(post)
                                 true
                             }
@@ -73,6 +71,13 @@ class PostViewHolder(
             repost.setOnClickListener {
                 onInteractionListener.onShare(post)
             }
+            play.setOnClickListener {
+                onInteractionListener.onPlay(post)
+            }
+            videoImage.setOnClickListener {
+                onInteractionListener.onPlay(post)
+            }
+            if (post.video != null) groupVideo.visibility = View.VISIBLE else groupVideo.visibility = View.GONE
         }
     }
 

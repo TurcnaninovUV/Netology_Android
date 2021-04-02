@@ -82,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="content"
+        app:constraint_referenced_ids="content,videoImage,play"
         tools:layout_editor_absoluteX="27dp"
         tools:layout_editor_absoluteY="236dp" />
 
@@ -124,6 +124,41 @@
         app:layout_constraintEnd_toEndOf="@+id/content"
         app:layout_constraintTop_toTopOf="@+id/repost"
         app:srcCompat="@drawable/ic_baseline_visibility_24" />
+
+    <ImageView
+        android:id="@+id/videoImage"
+        android:layout_width="380dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="8dp"
+        android:autoLink="web"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="@+id/content"
+        app:layout_constraintStart_toStartOf="@+id/content"
+        app:layout_constraintTop_toBottomOf="@+id/content"
+        app:srcCompat="@drawable/ic_netology"
+        tools:srcCompat="@drawable/ic_netology" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:clickable="true"
+        android:contentDescription="@string/description_post_save"
+        app:layout_constraintBottom_toBottomOf="@+id/videoImage"
+        app:layout_constraintEnd_toEndOf="@+id/videoImage"
+        app:layout_constraintStart_toStartOf="@+id/videoImage"
+        app:layout_constraintTop_toTopOf="@+id/videoImage"
+        app:srcCompat="@drawable/ic_baseline_play_circle_filled_24"
+        tools:ignore="NotSibling" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupVideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="play,videoImage"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="287dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
