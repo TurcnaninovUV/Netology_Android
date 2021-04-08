@@ -3,7 +3,6 @@ package ru.netology.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import ru.netology.dto.Post
 import ru.netology.repository.PostRepository
 import ru.netology.repository.PostRepositoryInMemoryImpl
@@ -43,6 +42,14 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             return
         }
         edited.value = edited.value?.copy(content = text)
+    }
+    fun reduction(count: Int): String {
+        return when {
+            (count >= 1_000_000) -> "${"%.1f".format(count / 1_000_000.toDouble())}M"
+            (count in 1000..9_999) -> "${"%.1f".format(count / 1_000.toDouble())}K"
+            (count in 10_000..999_999) -> "${count / 1000}K"
+            else -> count
+        }.toString()
     }
 
 }
