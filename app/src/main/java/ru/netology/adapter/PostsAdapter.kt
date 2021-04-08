@@ -78,16 +78,10 @@ class PostViewHolder(
             videoImage.setOnClickListener {
                 onInteractionListener.onPlay(post)
             }
+            listPost.setOnClickListener {
+                onInteractionListener.onShowPost(post)
+            }
             content.setOnClickListener {
-                onInteractionListener.onShowPost(post)
-            }
-            avatar.setOnClickListener {
-                onInteractionListener.onShowPost(post)
-            }
-            published.setOnClickListener {
-                onInteractionListener.onShowPost(post)
-            }
-            author.setOnClickListener {
                 onInteractionListener.onShowPost(post)
             }
             if (post.video != null) groupVideo.visibility = View.VISIBLE else groupVideo.visibility = View.GONE
