@@ -18,7 +18,7 @@ private val empty = Post(
 )
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: PostRepository = PostRepositorySharedPrefsImpl(application)
+    private val repository: PostRepository = PostRepositoryInMemoryImpl()
     val data = repository.getAll()
     fun likeById(id: Long) = repository.likeById(id)
     fun repost(id: Long) = repository.repostById(id)

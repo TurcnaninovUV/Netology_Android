@@ -39,31 +39,29 @@ class PostShowFragment : Fragment() {
         )
 
         arguments?.showPost.let {
-
-            val viewModel: PostViewModel by viewModels()
+            val postShow = it
             viewModel.data.observe(viewLifecycleOwner) { post ->
                 with(binding) {
                     post.map { post ->
-                        author.text = post.author
-                        published.text = post.published
-                        content.text = post.content
-                        like.text = viewModel.reduction(post.likes)
-                        repost.text = viewModel.reduction(post.repost)
-                        like.isChecked = post.likedByMe
+                        author.text = postShow?.author!!
+                        published.text = postShow.published
+                        content.text = postShow.content
+                        like.text = viewModel.reduction(postShow.likes)
+                        repost.text = viewModel.reduction(postShow.repost)
+                        like.isChecked = postShow.likedByMe
                         menu.setOnClickListener {
                             PopupMenu(it.context, it).apply {
                                 inflate(R.menu.options_post)
                                 setOnMenuItemClickListener { item ->
                                     when (item.itemId) {
                                         R.id.remove -> {
-                                            viewModel.removeById(post.id)
+                                            viewModel.removeById(postShow.id)
                                             findNavController().navigate(R.id.action_postShowFragment2_to_feedFragment)
                                             true
                                         }
                                         R.id.edit -> {
-                                        viewModel.edit(post)
                                             findNavController().navigate(R.id.action_postShowFragment2_to_newAndEditPostFragment,
-                                                Bundle().apply { textArg = post.content })
+                                                Bundle().apply { textArg = postShow.content })
                                             true
                                         }
                                         else -> false
@@ -72,13 +70,13 @@ class PostShowFragment : Fragment() {
                             }.show()
                         }
                         like.setOnClickListener {
-                            viewModel.likeById(post.id)
+                            postShow.id.let { it1 -> viewModel.likeById(it1) }
                         }
                         repost.setOnClickListener {
-                            viewModel.repost(post.id)
+                            postShow.id.let { it1 -> viewModel.repost(it1) }
                             val intent = Intent().apply {
                                 action = Intent.ACTION_SEND
-                                putExtra(Intent.EXTRA_TEXT, post.content)
+                                putExtra(Intent.EXTRA_TEXT, postShow.content)
                                 type = "text/plain"
                             }
                             val shareIntent =
@@ -86,17 +84,16 @@ class PostShowFragment : Fragment() {
                             startActivity(shareIntent)
                         }
                         play.setOnClickListener {
-                            val intentVideo = Intent(Intent.ACTION_VIEW, Uri.parse(post.video))
+                            val intentVideo = Intent(Intent.ACTION_VIEW, Uri.parse(postShow.video))
                             startActivity(intentVideo)
                         }
                         videoImage.setOnClickListener {
-                            val intentVideo = Intent(Intent.ACTION_VIEW, Uri.parse(post.video))
+                            val intentVideo = Intent(Intent.ACTION_VIEW, Uri.parse(postShow.video))
                             startActivity(intentVideo)
                         }
                         if (post.video != null) groupVideo.visibility =
                             View.VISIBLE else groupVideo.visibility = View.GONE
                     }
-
 
                 }
             }
