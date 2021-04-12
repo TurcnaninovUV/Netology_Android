@@ -12,7 +12,7 @@ import kotlinx.parcelize.Parcelize
         val published: String,
         val likes: Int = 0,
         val repost: Int = 0,
-        val likedByMe: Boolean = false,
+        val likedByMe: Boolean = true,
         val video: String? = null
 ) : Parcelable
 

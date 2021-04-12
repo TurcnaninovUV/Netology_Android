@@ -94,7 +94,6 @@ class PostShowFragment : Fragment() {
                         if (post.video != null) groupVideo.visibility =
                                 View.VISIBLE else groupVideo.visibility = View.GONE
                     }
-
                 }
             }
         }
