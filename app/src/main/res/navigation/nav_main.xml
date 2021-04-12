@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/feedFragment">
+
+    <fragment
+        android:id="@+id/feedFragment"
+        android:name="ru.netology.activity.FeedFragment"
+        android:label="fragment_feed"
+        tools:layout="@layout/fragment_feed">
+        <action
+            android:id="@+id/action_feedFragment_to_newAndEditPostFragment"
+            app:destination="@id/newAndEditPostFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_postShowFragment2"
+            app:destination="@id/postShowFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/newAndEditPostFragment"
+        android:name="ru.netology.activity.NewAndEditPostFragment"
+        android:label="fragment_new_post_and_edit"
+        tools:layout="@layout/fragment_new_post_and_edit" >
+        <action
+            android:id="@+id/action_newAndEditPostFragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/postShowFragment2"
+        android:name="ru.netology.activity.PostShowFragment"
+        android:label="fragment_post_show"
+        tools:layout="@layout/fragment_post_show" >
+        <action
+            android:id="@+id/action_postShowFragment2_to_newAndEditPostFragment"
+            app:destination="@id/newAndEditPostFragment" />
+        <action
+            android:id="@+id/action_postShowFragment2_to_feedFragment"
+            app:destination="@id/feedFragment" />
+    </fragment>
+</navigation>

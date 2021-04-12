@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/listPost"
+    android:id="@+id/list_post"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:context=".activity.PostShowFragment"
+    app:defaultNavHost="true"
+    app:navGraph="@navigation/nav_main">
 
     <ImageView
         android:id="@+id/avatar"
@@ -157,7 +161,6 @@
         android:id="@+id/groupVideo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
         app:constraint_referenced_ids="play,videoImage"
         tools:layout_editor_absoluteX="46dp"
         tools:layout_editor_absoluteY="287dp" />

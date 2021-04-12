@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.core.view.forEach
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.card_post.*
 import ru.netology.R
 import ru.netology.databinding.CardPostBinding
 import ru.netology.dto.Post
@@ -19,6 +19,7 @@ interface OnInteractionListener {
     fun onRemove(post: Post) {}
     fun onShare(post: Post) {}
     fun onPlay(post: Post) {}
+    fun onShowPost (post : Post) {}
 }
 
 class PostsAdapter(
@@ -76,6 +77,12 @@ class PostViewHolder(
             }
             videoImage.setOnClickListener {
                 onInteractionListener.onPlay(post)
+            }
+            listPost.setOnClickListener {
+                onInteractionListener.onShowPost(post)
+            }
+            content.setOnClickListener {
+                onInteractionListener.onShowPost(post)
             }
             if (post.video != null) groupVideo.visibility = View.VISIBLE else groupVideo.visibility = View.GONE
         }

@@ -3,10 +3,11 @@ package ru.netology.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import ru.netology.db.AppDb
 import ru.netology.dto.Post
 import ru.netology.repository.PostRepository
 import ru.netology.repository.PostRepositoryInMemoryImpl
+import ru.netology.repository.PostRepositorySQLiteImpl
 import ru.netology.repository.PostRepositorySharedPrefsImpl
 
 
@@ -19,7 +20,10 @@ private val empty = Post(
 )
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: PostRepository = PostRepositorySharedPrefsImpl(application)
+    // упрощённый вариант
+    private val repository: PostRepository = PostRepositorySQLiteImpl(
+            AppDb.getInstance(application).postDao
+    )
     val data = repository.getAll()
     fun likeById(id: Long) = repository.likeById(id)
     fun repost(id: Long) = repository.repostById(id)
@@ -44,5 +48,12 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         }
         edited.value = edited.value?.copy(content = text)
     }
-
+    fun reduction(count: Int): String {
+        return when {
+            (count >= 1_000_000) -> "${"%.1f".format(count / 1_000_000.toDouble())}M"
+            (count in 1000..9_999) -> "${"%.1f".format(count / 1_000.toDouble())}K"
+            (count in 10_000..999_999) -> "${count / 1000}K"
+            else -> count
+        }.toString()
+    }
 }

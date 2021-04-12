@@ -17,10 +17,12 @@ class PostRepositorySharedPrefsImpl(
     private val key = "posts"
     private var nextId = 1L
     private var posts = emptyList<Post>()
+
         set(value) {
             field = value
             sync()
         }
+
 
     private val data = MutableLiveData(posts)
 
