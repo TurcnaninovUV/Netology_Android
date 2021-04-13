@@ -8,11 +8,20 @@ import ru.netology.dto.Post
 import ru.netology.entity.PostEntity
 
 class PostRepositoryImpl(
-    private val dao: PostDao,
+        private val dao: PostDao,
 ) : PostRepository {
-    override fun getAll(): LiveData<List<Post>> = dao.getAll().map { it ->
-        it.map {
-            it.toPost()
+    override fun getAll() = Transformations.map(dao.getAll()) { list ->
+        list.map {
+            Post(
+                    id = it.id,
+                    author = it.author,
+                    content = it.content,
+                    published = it.published,
+                    likedByMe = it.likedByMe,
+                    likes = it.likes,
+                    repost = it.repost,
+                    video = it.video
+            )
         }
     }
 
