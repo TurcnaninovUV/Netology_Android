@@ -24,18 +24,18 @@ class PostShowFragment : Fragment() {
     }
 
     private val viewModel: PostViewModel by viewModels(
-            ownerProducer = ::requireParentFragment
+        ownerProducer = ::requireParentFragment
     )
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         val binding = FragmentPostShowBinding.inflate(
-                inflater,
-                container,
-                false
+            inflater,
+            container,
+            false
         )
 
         arguments?.showPost.let {
@@ -59,7 +59,7 @@ class PostShowFragment : Fragment() {
                                 }
                                 R.id.edit -> {
                                     findNavController().navigate(R.id.action_postShowFragment2_to_newAndEditPostFragment,
-                                            Bundle().apply { textArg = postShow.content })
+                                        Bundle().apply { textArg = postShow.content })
                                     true
                                 }
                                 else -> false
@@ -78,7 +78,7 @@ class PostShowFragment : Fragment() {
                         type = "text/plain"
                     }
                     val shareIntent =
-                            Intent.createChooser(intent, getString(R.string.chooser_share_post))
+                        Intent.createChooser(intent, getString(R.string.chooser_share_post))
                     startActivity(shareIntent)
                 }
                 play.setOnClickListener {
@@ -90,7 +90,7 @@ class PostShowFragment : Fragment() {
                     startActivity(intentVideo)
                 }
                 if (postShow.video != null) groupVideo.visibility =
-                        View.VISIBLE else groupVideo.visibility = View.GONE
+                    View.VISIBLE else groupVideo.visibility = View.GONE
             }
         }
         return binding.root

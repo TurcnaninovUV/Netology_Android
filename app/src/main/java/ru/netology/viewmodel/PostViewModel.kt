@@ -6,9 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import ru.netology.db.AppDb
 import ru.netology.dto.Post
 import ru.netology.repository.PostRepository
-import ru.netology.repository.PostRepositoryInMemoryImpl
-import ru.netology.repository.PostRepositorySQLiteImpl
-import ru.netology.repository.PostRepositorySharedPrefsImpl
+import ru.netology.repository.PostRepositoryImpl
 
 
 private val empty = Post(
@@ -21,8 +19,8 @@ private val empty = Post(
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
     // упрощённый вариант
-    private val repository: PostRepository = PostRepositorySQLiteImpl(
-            AppDb.getInstance(application).postDao
+    private val repository: PostRepository = PostRepositoryImpl(
+        AppDb.getInstance(context = application).postDao()
     )
     val data = repository.getAll()
     fun likeById(id: Long) = repository.likeById(id)
