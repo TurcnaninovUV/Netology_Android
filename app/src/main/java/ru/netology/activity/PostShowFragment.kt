@@ -40,61 +40,57 @@ class PostShowFragment : Fragment() {
 
         arguments?.showPost.let {
             val postShow = it
-            viewModel.data.observe(viewLifecycleOwner) { post ->
-                with(binding) {
-                    post.map { post ->
-                        author.text = postShow?.author!!
-                        published.text = postShow.published
-                        content.text = postShow.content
-                        like.text = viewModel.reduction(postShow.likes)
-                        repost.text = viewModel.reduction(postShow.repost)
-                        like.isChecked = postShow.likedByMe
-                        menu.setOnClickListener {
-                            PopupMenu(it.context, it).apply {
-                                inflate(R.menu.options_post)
-                                setOnMenuItemClickListener { item ->
-                                    when (item.itemId) {
-                                        R.id.remove -> {
-                                            viewModel.removeById(postShow.id)
-                                            findNavController().navigate(R.id.action_postShowFragment2_to_feedFragment)
-                                            true
-                                        }
-                                        R.id.edit -> {
-                                            findNavController().navigate(R.id.action_postShowFragment2_to_newAndEditPostFragment,
-                                                    Bundle().apply { textArg = postShow.content })
-                                            true
-                                        }
-                                        else -> false
-                                    }
+            with(binding) {
+                author.text = postShow?.author!!
+                published.text = postShow.published
+                content.text = postShow.content
+                like.text = viewModel.reduction(postShow.likes)
+                repost.text = viewModel.reduction(postShow.repost)
+                like.isChecked = postShow.likedByMe
+                menu.setOnClickListener {
+                    PopupMenu(it.context, it).apply {
+                        inflate(R.menu.options_post)
+                        setOnMenuItemClickListener { item ->
+                            when (item.itemId) {
+                                R.id.remove -> {
+                                    viewModel.removeById(postShow.id)
+                                    findNavController().navigate(R.id.action_postShowFragment2_to_feedFragment)
+                                    true
                                 }
-                            }.show()
-                        }
-                        like.setOnClickListener {
-                            viewModel.likeById(postShow.id)
-                        }
-                        repost.setOnClickListener {
-                            viewModel.repost(postShow.id)
-                            val intent = Intent().apply {
-                                action = Intent.ACTION_SEND
-                                putExtra(Intent.EXTRA_TEXT, postShow.content)
-                                type = "text/plain"
+                                R.id.edit -> {
+                                    findNavController().navigate(R.id.action_postShowFragment2_to_newAndEditPostFragment,
+                                            Bundle().apply { textArg = postShow.content })
+                                    true
+                                }
+                                else -> false
                             }
-                            val shareIntent =
-                                    Intent.createChooser(intent, getString(R.string.chooser_share_post))
-                            startActivity(shareIntent)
                         }
-                        play.setOnClickListener {
-                            val intentVideo = Intent(Intent.ACTION_VIEW, Uri.parse(postShow.video))
-                            startActivity(intentVideo)
-                        }
-                        videoImage.setOnClickListener {
-                            val intentVideo = Intent(Intent.ACTION_VIEW, Uri.parse(postShow.video))
-                            startActivity(intentVideo)
-                        }
-                        if (post.video != null) groupVideo.visibility =
-                                View.VISIBLE else groupVideo.visibility = View.GONE
-                    }
+                    }.show()
                 }
+                like.setOnClickListener {
+                    viewModel.likeById(postShow.id)
+                }
+                repost.setOnClickListener {
+                    viewModel.repost(postShow.id)
+                    val intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, postShow.content)
+                        type = "text/plain"
+                    }
+                    val shareIntent =
+                            Intent.createChooser(intent, getString(R.string.chooser_share_post))
+                    startActivity(shareIntent)
+                }
+                play.setOnClickListener {
+                    val intentVideo = Intent(Intent.ACTION_VIEW, Uri.parse(postShow.video))
+                    startActivity(intentVideo)
+                }
+                videoImage.setOnClickListener {
+                    val intentVideo = Intent(Intent.ACTION_VIEW, Uri.parse(postShow.video))
+                    startActivity(intentVideo)
+                }
+                if (postShow.video != null) groupVideo.visibility =
+                        View.VISIBLE else groupVideo.visibility = View.GONE
             }
         }
         return binding.root

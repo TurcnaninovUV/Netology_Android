@@ -19,7 +19,7 @@ interface OnInteractionListener {
     fun onRemove(post: Post) {}
     fun onShare(post: Post) {}
     fun onPlay(post: Post) {}
-    fun onShowPost (post : Post) {}
+    fun onShowPost(post: Post) {}
 }
 
 class PostsAdapter(
