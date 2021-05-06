@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation.findNavController
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
-import ru.netology.R
-import ru.netology.databinding.FragmentNewPostAndEditBinding
+import ru.netology.databinding.FragmentNewPostBinding
 import ru.netology.util.AndroidUtils
 import ru.netology.util.StringArg
 import ru.netology.viewmodel.PostViewModel
 
-class NewAndEditPostFragment : Fragment() {
+class NewPostFragment : Fragment() {
+
     companion object {
         var Bundle.textArg: String? by StringArg
     }
@@ -28,7 +28,7 @@ class NewAndEditPostFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentNewPostAndEditBinding.inflate(
+        val binding = FragmentNewPostBinding.inflate(
             inflater,
             container,
             false
@@ -41,8 +41,12 @@ class NewAndEditPostFragment : Fragment() {
             viewModel.changeContent(binding.edit.text.toString())
             viewModel.save()
             AndroidUtils.hideKeyboard(requireView())
-            findNavController().navigate(R.id.action_newAndEditPostFragment_to_feedFragment)
+        }
+        viewModel.postCreated.observe(viewLifecycleOwner) {
+            viewModel.loadPosts()
+            findNavController().navigateUp()
         }
         return binding.root
     }
 }
+
