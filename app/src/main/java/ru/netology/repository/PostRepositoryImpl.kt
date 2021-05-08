@@ -2,6 +2,7 @@ package ru.netology.repository
 
 
 import com.google.gson.Gson
+import com.google.gson.internal.`$Gson$Types`
 import com.google.gson.reflect.TypeToken
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -19,7 +20,7 @@ class PostRepositoryImpl: PostRepository {
     private val typeToken = object : TypeToken<List<Post>>() {}
 
     companion object {
-        private const val BASE_URL = "http://192.168.1.187:9999"
+        private const val BASE_URL = "http://192.168.0.244:9999"
         private val jsonType = "application/json".toMediaType()
     }
 
@@ -38,6 +39,7 @@ class PostRepositoryImpl: PostRepository {
 
     override fun likeById(id: Long) {
         val request: Request = Request.Builder()
+                .post(gson.toJson(id).toRequestBody(jsonType))
                 .url("${BASE_URL}/api/slow/posts/$id/likes")
                 .build()
 
@@ -47,7 +49,14 @@ class PostRepositoryImpl: PostRepository {
     }
 
     override fun repostById(id: Long) {
-        // TODO: do this homework
+        val request: Request = Request.Builder()
+                .post(gson.toJson(id).toRequestBody(jsonType))
+                .url("${BASE_URL}/api/slow/posts/$id/repost")
+                .build()
+
+        client.newCall(request)
+                .execute()
+                .close()
     }
 
     override fun save(post: Post) {

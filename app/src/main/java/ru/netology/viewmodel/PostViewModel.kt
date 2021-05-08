@@ -77,23 +77,28 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun likeById(id: Long) {
-        _data.postValue(_data.value?.copy(posts = _data.value?.posts.orEmpty().map {
-            if (it.id != id) it else it.copy(
-                    likedByMe = !it.likedByMe,
-                    likes = if (it.likedByMe) it.likes - 1 else it.likes + 1
+        thread {
+            _data.postValue(_data.value?.copy(posts = _data.value?.posts.orEmpty().map {
+                if (it.id != id) it else it.copy(
+                        likedByMe = !it.likedByMe,
+                        likes = if (it.likedByMe) it.likes - 1 else it.likes + 1
+                )
+            })
             )
-        })
-        )
+            repository.likeById(id)
+        }
     }
 
-
     fun repostById(id: Long) {
-        _data.postValue(_data.value?.copy(posts = _data.value?.posts.orEmpty().map {
-            if (it.id != id) it else it.copy(
-                    repost = it.repost + 1
+        thread {
+            _data.postValue(_data.value?.copy(posts = _data.value?.posts.orEmpty().map {
+                if (it.id != id) it else it.copy(
+                        repost = it.repost + 1
+                )
+            })
             )
-        })
-        )
+            repository.repostById(id)
+        }
     }
 
 
