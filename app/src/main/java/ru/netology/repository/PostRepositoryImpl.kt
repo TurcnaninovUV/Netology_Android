@@ -67,7 +67,12 @@ class PostRepositoryImpl : PostRepository {
         client.newCall(request)
                 .enqueue(object : Callback {
                     override fun onResponse(call: Call, response: Response) {
-                        callback.onSuccess(id)
+                        val body = response.body?.string() ?: throw RuntimeException("body is null")
+                        try {
+                            callback.onSuccess(gson.fromJson(body, typeToken.type))
+                        } catch (e: Exception) {
+                            callback.onError(e)
+                        }
                     }
 
                     override fun onFailure(call: Call, e: IOException) {
@@ -96,7 +101,12 @@ class PostRepositoryImpl : PostRepository {
         client.newCall(request)
                 .enqueue(object : Callback {
                     override fun onResponse(call: Call, response: Response) {
-                        callback.onSuccess(id)
+                        val body = response.body?.string() ?: throw RuntimeException("body is null")
+                        try {
+                            callback.onSuccess(gson.fromJson(body, typeToken.type))
+                        } catch (e: Exception) {
+                            callback.onError(e)
+                        }
                     }
 
                     override fun onFailure(call: Call, e: IOException) {
@@ -126,7 +136,12 @@ class PostRepositoryImpl : PostRepository {
         client.newCall(request)
                 .enqueue(object : Callback {
                     override fun onResponse(call: Call, response: Response) {
-                        callback.onSuccess(post)
+                        val body = response.body?.string() ?: throw RuntimeException("body is null")
+                        try {
+                            callback.onSuccess(gson.fromJson(body, typeToken.type))
+                        } catch (e: Exception) {
+                            callback.onError(e)
+                        }
                     }
 
                     override fun onFailure(call: Call, e: IOException) {
@@ -155,7 +170,12 @@ class PostRepositoryImpl : PostRepository {
         client.newCall(request)
                 .enqueue(object : Callback {
                     override fun onResponse(call: Call, response: Response) {
-                        callback.onSuccess(id)
+                        val body = response.body?.string() ?: throw RuntimeException("body is null")
+                        try {
+                            callback.onSuccess(gson.fromJson(body, typeToken.type))
+                        } catch (e: Exception) {
+                            callback.onError(e)
+                        }
                     }
 
                     override fun onFailure(call: Call, e: IOException) {

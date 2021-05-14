@@ -74,7 +74,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         edited.value?.let {
             repository.saveAsync(object : PostRepository.SaveCallback {
                 override fun onSuccess(post: Post) {
-                    _postCreated.postValue(Unit)
+                    _data.postValue(
+                            _data.value?.copy(posts = _data.value?.posts.orEmpty().plusElement(it))
+                    )
                 }
 
                 override fun onError(e: Exception) {
@@ -82,18 +84,8 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }, it)
         }
-//        edited.value = empty
+        edited.value = empty
     }
-
-//    fun save() {
-//        edited.value?.let {
-//            thread {
-//                repository.save(it)
-//                _postCreated.postValue(Unit)
-//            }
-//        }
-//        edited.value = empty
-//    }
 
     fun edit(post: Post) {
         edited.value = post
@@ -147,83 +139,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             override fun onError(e: Exception) {
                 _data.postValue(FeedModel(error = true))
             }
-
         }, id)
     }
 }
 
-
-//            fun removeById(id: Long) {
-//    thread {
-//        // Оптимистичная модель
-//        val old = _data.value?.posts.orEmpty()
-//        _data.postValue(
-//                _data.value?.copy(posts = _data.value?.posts.orEmpty()
-//                        .filter { it.id != id }
-//                )
-//        )
-//        try {
-//            repository.removeById(id)
-//        } catch (e: IOException) {
-//            _data.postValue(_data.value?.copy(posts = old))
-//        }
-//    }
-
-
-//
-//fun removeById(id: Long) {
-//    thread {
-//        // Оптимистичная модель
-//        val old = _data.value?.posts.orEmpty()
-//        _data.postValue(
-//            _data.value?.copy(posts = _data.value?.posts.orEmpty()
-//                .filter { it.id != id }
-//            )
-//        )
-//        try {
-//            repository.removeById(id)
-//        } catch (e: IOException) {
-//            _data.postValue(_data.value?.copy(posts = old))
-//        }
-//    }
-//}
-//}
-//    fun repostById(id: Long) {
-//        thread {
-//            _data.postValue(_data.value?.copy(posts = _data.value?.posts.orEmpty().map {
-//                if (it.id != id) it else it.copy(
-//                        repost = it.repost + 1
-//                )
-//            })
-//            )
-//            repository.repostById(id)
-//        }
-//    }
-
-//    fun likeById(id: Long) {
-//        thread {
-//            _data.postValue(_data.value?.copy(posts = _data.value?.posts.orEmpty().map {
-//                if (it.id != id) it else it.copy(
-//                        likedByMe = !it.likedByMe,
-//                        likes = if (it.likedByMe) it.likes - 1 else it.likes + 1
-//                )
-//            })
-//            )
-//            repository.likeById(id)
-//        }
-//    }
-
-//    fun loadPosts() {
-//        thread {
-//            // Начинаем загрузку
-//            _data.postValue(FeedModel(loading = true))
-//            try {
-//                // Данные успешно получены
-//                val posts = repository.getAll()
-//                FeedModel(posts = posts, empty = posts.isEmpty())
-//            } catch (e: IOException) {
-//                // Получена ошибка
-//                FeedModel(error = true)
-//            }.also(_data::postValue)
-//        }
-//    }
