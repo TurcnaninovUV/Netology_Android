@@ -20,8 +20,12 @@ class PostRepositoryImpl : PostRepository {
 
     companion object {
         private const val BASE_URL = "http://192.168.0.107:9999"
+
+        // 192.168.0.107 дом
+        // 192.168.10.120 работа
         private val jsonType = "application/json".toMediaType()
     }
+
 
     override fun getAll(): List<Post> {
         val request: Request = Request.Builder()
@@ -35,6 +39,7 @@ class PostRepositoryImpl : PostRepository {
                     gson.fromJson(it, typeToken.type)
                 }
     }
+
 
     override fun getAllAsync(callback: PostRepository.GetAllCallback) {
         val request: Request = Request.Builder()
