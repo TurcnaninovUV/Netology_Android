@@ -21,7 +21,7 @@ interface OnInteractionListener {
     fun onShowPost(post: Post) {}
 }
 
-class PostsAdapter(
+class PostsAdapter (
         private val onInteractionListener: OnInteractionListener
 ) : ListAdapter<Post, PostViewHolder>(PostViewHolder.PostDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {

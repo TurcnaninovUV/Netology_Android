@@ -3,32 +3,17 @@ package ru.netology.repository
 import ru.netology.dto.Post
 
 interface PostRepository {
-    fun getAll(): List<Post>
-    fun likeById(id: Long)
+    fun getAllAsync(callback: Callback<List<Post>>)
+    fun likeById(id: Long, callback: Callback<Post>)
     fun repostById(id: Long)
-    fun removeById(id: Long)
-    fun save(post: Post)
+    fun removeById(id: Long, callback: Callback<Unit>)
+    fun save(post: Post, callback: Callback<Post>)
+    fun dislikeById(id: Long, callback: Callback<Post>)
 
-    fun likeByIdAsync(callback: LikeAndRepostByIdCallback, id: Long)
-    fun repostByIdAsync(callback: LikeAndRepostByIdCallback, id: Long)
-    fun removeByIdAsync(callback: LikeAndRepostByIdCallback, id: Long)
 
-    fun saveAsync(callback: SaveCallback, post: Post)
-
-    interface SaveCallback {
-        fun onSuccess(post: Post) {}
-        fun onError(e: Exception) {}
-    }
-
-    interface LikeAndRepostByIdCallback {
-        fun onSuccess(id: Long) {}
-        fun onError(e: Exception) {}
-    }
-
-    fun getAllAsync(callback: GetAllCallback)
-
-    interface GetAllCallback {
-        fun onSuccess(posts: List<Post>) {}
+    interface Callback<T> {
+        fun onSuccess(posts: T) {}
         fun onError(e: Exception) {}
     }
 }
+

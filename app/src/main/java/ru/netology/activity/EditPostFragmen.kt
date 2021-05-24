@@ -10,13 +10,12 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import ru.netology.R
-import ru.netology.databinding.FragmentNewPostBinding
+import ru.netology.databinding.FragmentEditPostBinding
 import ru.netology.util.AndroidUtils
 import ru.netology.util.StringArg
 import ru.netology.viewmodel.PostViewModel
 
-class NewPostFragment : Fragment() {
-
+class EditPostFragment : Fragment() {
     companion object {
         var Bundle.textArg: String? by StringArg
     }
@@ -29,23 +28,15 @@ class NewPostFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        val binding = FragmentNewPostBinding.inflate(
-            inflater,
-            container,
-            false
-        )
+    ): View? {
+        val binding = FragmentEditPostBinding.inflate(inflater, container, false)
 
-        arguments?.textArg
-            ?.let(binding.edit::setText)
-
-        binding.ok.setOnClickListener {
-            viewModel.changeContent(binding.edit.text.toString())
+        binding.editEdit.requestFocus()
+        arguments?.textArg?.let(binding.editEdit::setText)
+        binding.okEdit.setOnClickListener {
+            viewModel.changeContent(binding.editEdit.text.toString())
             viewModel.save()
             AndroidUtils.hideKeyboard(requireView())
-        }
-
-        viewModel.postCreated.observe(viewLifecycleOwner) {
             findNavController().navigateUp()
         }
 
@@ -60,4 +51,3 @@ class NewPostFragment : Fragment() {
         return binding.root
     }
 }
-
