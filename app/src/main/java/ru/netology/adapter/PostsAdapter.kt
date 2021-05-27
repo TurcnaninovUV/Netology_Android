@@ -4,11 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import ru.netology.R
 import ru.netology.databinding.CardPostBinding
 import ru.netology.dto.Post
@@ -22,7 +21,7 @@ interface OnInteractionListener {
     fun onShowPost(post: Post) {}
 }
 
-class PostsAdapter(
+class PostsAdapter (
         private val onInteractionListener: OnInteractionListener
 ) : ListAdapter<Post, PostViewHolder>(PostViewHolder.PostDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -66,6 +65,25 @@ class PostViewHolder(
                     }
                 }.show()
             }
+            val url = "http://192.168.10.120:9999"
+            // 192.168.0.107 дом
+            // 192.168.10.120 работа
+            Glide.with(avatar)
+                    .load("$url/avatars/${post.authorAvatar}")
+                    .placeholder(R.drawable.ic_loading_100dp)
+                    .error(R.drawable.ic_error_100dp)
+                    .circleCrop()
+                    .timeout(10_000)
+                    .into(binding.avatar)
+            if (post.attachment != null) {
+                Glide.with(videoImage)
+                        .load("$url/images/${post.attachment!!.url}")
+                        .placeholder(R.drawable.ic_loading_100dp)
+                        .error(R.drawable.ic_error_100dp)
+                        .timeout(10_000)
+                        .into(binding.videoImage)
+            } else videoImage.visibility = View.GONE
+
             like.setOnClickListener {
                 onInteractionListener.onLike(post)
             }

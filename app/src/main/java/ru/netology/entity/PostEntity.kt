@@ -6,38 +6,41 @@ import ru.netology.dto.Post
 
 @Entity
 data class PostEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long,
-    val author: String,
-    val content: String,
-    val published: String,
-    val likedByMe: Boolean = true,
-    val likes: Int = 0,
-    val repost: Int = 0,
-    val video: String? = null
+        @PrimaryKey(autoGenerate = true)
+        val id: Long,
+        val author: String,
+        val authorAvatar: String,
+        val content: String,
+        val published: String,
+        val likedByMe: Boolean = true,
+        val likes: Int = 0,
+        val repost: Int = 0,
+        val video: String? = null
 
 ) {
     fun toPost() = Post(
-        id = id,
-        author = author,
-        content = content,
-        published = published,
-        likedByMe = likedByMe,
-        likes = likes,
-        repost = repost,
-        video = video
+            id = id,
+            author = author,
+            authorAvatar = authorAvatar,
+            content = content,
+            published = published,
+            likedByMe = likedByMe,
+            likes = likes,
+            repost = repost,
+            video = video
     )
 
     companion object {
         fun fromDto(dto: Post) =
-            PostEntity(
-                id = dto.id,
-                author = dto.author,
-                content = dto.content,
-                published = dto.published,
-                likedByMe = dto.likedByMe,
-                likes = dto.likes,
-                repost = dto.repost,
-                video = dto.video)
+                PostEntity(
+                        id = dto.id,
+                        author = dto.author,
+                        authorAvatar = dto.authorAvatar,
+                        content = dto.content,
+                        published = dto.published,
+                        likedByMe = dto.likedByMe,
+                        likes = dto.likes,
+                        repost = dto.repost,
+                        video = dto.video)
     }
 }

@@ -158,7 +158,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        app:constraint_referenced_ids="play,videoImage"
+        app:constraint_referenced_ids="play"
         tools:layout_editor_absoluteX="46dp"
         tools:layout_editor_absoluteY="287dp" />
 
