@@ -76,6 +76,17 @@ class FeedFragment : Fragment() {
             binding.emptyText.isVisible = state.empty
         })
 
+        binding.freshPosts.setOnClickListener {
+            viewModel.newerCount.observe(viewLifecycleOwner) { state ->
+                viewModel.getPostsReadIt()
+                // TODO: just log it, interaction must be in homework
+                println(state)
+            }
+            binding.swiperefresh.setOnRefreshListener {
+                viewModel.refreshPosts()
+            }
+        }
+
         binding.swiperefresh.setOnRefreshListener {
             viewModel.refreshPosts()
         }

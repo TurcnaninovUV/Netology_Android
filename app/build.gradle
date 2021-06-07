@@ -46,7 +46,7 @@ android {
         debug {
             manifestPlaceholders.usesCleartextTraffic = true
             buildConfigField "String", "BASE_URL", '"http://192.168.10.120:9999"'
-            // 192.168.0.107 дом
+            // 192.168.0.106 дом
             // 192.168.10.120 работа
         }
     }
