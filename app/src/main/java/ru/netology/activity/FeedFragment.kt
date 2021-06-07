@@ -62,23 +62,22 @@ class FeedFragment : Fragment() {
             }
         })
         binding.list.adapter = adapter
-        viewModel.data.observe(viewLifecycleOwner) { state ->
-            adapter.submitList(state.posts)
+        viewModel.dataState.observe(viewLifecycleOwner, { state ->
             binding.progress.isVisible = state.loading
-            binding.errorGroup.isVisible = state.error
+            binding.swiperefresh.isRefreshing = state.refreshing
+            if (state.error) {
+                Snackbar.make(binding.root, R.string.error_loading, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.retry_loading) { viewModel.loadPosts() }
+                    .show()
+            }
+        })
+        viewModel.data.observe(viewLifecycleOwner, { state ->
+            adapter.submitList(state.posts)
             binding.emptyText.isVisible = state.empty
-        }
+        })
 
-        viewModel.networkError.observe(viewLifecycleOwner) {
-            Snackbar.make(
-                requireView(),
-                "${resources.getString(R.string.network_error)} $it",
-                Snackbar.LENGTH_LONG
-            ).show()
-        }
-
-        binding.retryButton.setOnClickListener {
-            viewModel.loadPosts()
+        binding.swiperefresh.setOnRefreshListener {
+            viewModel.refreshPosts()
         }
 
         binding.fab.setOnClickListener {

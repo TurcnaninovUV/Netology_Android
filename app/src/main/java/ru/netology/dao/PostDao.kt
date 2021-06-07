@@ -9,28 +9,37 @@ import ru.netology.entity.PostEntity
 
 @Dao
 interface PostDao {
-    @Query("SELECT * FROM PostEntity ORDER BY id")
+    @Query("SELECT * FROM PostEntity ORDER BY id DESC")
     fun getAll(): LiveData<List<PostEntity>>
 
-    @Insert
-    fun insert(post: PostEntity)
-
-    @Query("UPDATE PostEntity SET content = :content WHERE id = :id")
-    fun updateContentById(id: Long, content: String)
+    @Query("SELECT COUNT(*) == 0 FROM PostEntity")
+    suspend fun isEmpty(): Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun save(post: PostEntity)
+    suspend fun insert(post: PostEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(posts: List<PostEntity>)
 
     @Query(
         """
         UPDATE PostEntity SET
-        likes = likes + CASE WHEN likedByMe THEN -1 ELSE 1 END,
+        likes = likes + CASE WHEN likedByMe THEN 1 END,
         likedByMe = CASE WHEN likedByMe THEN 0 ELSE 1 END
         WHERE id = :id
         """
     )
-    fun likeById(id: Long)
+    suspend fun likeById(id: Long)
+
+    @Query(
+        """
+        UPDATE PostEntity SET
+        likes = likes + CASE WHEN likedByMe = 0 THEN -1 END,
+        likedByMe = CASE WHEN likedByMe THEN 1 ELSE 0 END
+        WHERE id = :id
+        """
+    )
+    suspend fun dislikeById(id: Long)
 
     @Query(
         """
@@ -39,9 +48,8 @@ interface PostDao {
             WHERE id = :id
             """
     )
-    fun repostById(id: Long)
-
+    suspend fun repostById(id: Long)
 
     @Query("DELETE FROM PostEntity WHERE id = :id")
-    fun removeById(id: Long)
+    suspend fun removeById(id: Long)
 }
