@@ -1,5 +1,7 @@
 package ru.netology.dto
 
+import ru.netology.enumeration.AttachmentType
+
 
 data class Post(
         val id: Long,
@@ -17,19 +19,8 @@ data class Post(
 
 data class Attachment(
         val url: String,
-        val description: String,
         val type: AttachmentType,
 )
 
-data class Comment(
-        val id: Long,
-        val postId: Long,
-        val author: String,
-        val authorAvatar: String,
-        val content: String,
-        val published: Long,
-        val likedByMe: Boolean,
-        val likes: Int = 0,
-)
 
 

@@ -1,15 +1,13 @@
 package ru.netology.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 import ru.netology.entity.PostEntity
+import ru.netology.enumeration.AttachmentType
 
 @Dao
 interface PostDao {
-    @Query("SELECT * FROM PostEntity WHERE readIt == 1 ORDER BY id DESC")
+    @Query("SELECT * FROM PostEntity ORDER BY id DESC")
     fun getAll(): Flow<List<PostEntity>>
 
     @Query("UPDATE PostEntity SET readIt = 1")
@@ -58,4 +56,12 @@ interface PostDao {
 
     @Query("DELETE FROM PostEntity WHERE id = :id")
     suspend fun removeById(id: Long)
+}
+
+class Converters {
+    @TypeConverter
+    fun toAttachmentType(value: String) = enumValueOf<AttachmentType>(value)
+
+    @TypeConverter
+    fun fromAttachmentType(value: AttachmentType) = value.name
 }

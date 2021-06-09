@@ -70,6 +70,7 @@
         android:contentDescription="@string/add_post"
         android:focusable="true"
         android:text="Свежие записи"
+        android:visibility="gone"
         app:shapeAppearance = "?attr/shapeAppearanceSmallComponent" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

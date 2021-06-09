@@ -76,15 +76,15 @@ class FeedFragment : Fragment() {
             binding.emptyText.isVisible = state.empty
         })
 
+        viewModel.newerCount.observe(viewLifecycleOwner) {
+            if (it > 0) binding.freshPosts.visibility = View.VISIBLE
+        }
+
         binding.freshPosts.setOnClickListener {
-            viewModel.newerCount.observe(viewLifecycleOwner) { state ->
-                viewModel.getPostsReadIt()
-                // TODO: just log it, interaction must be in homework
-                println(state)
-            }
-            binding.swiperefresh.setOnRefreshListener {
-                viewModel.refreshPosts()
-            }
+            viewModel.getPostsReadIt()
+            viewModel.loadPosts()
+            binding.freshPosts.visibility = View.GONE
+            binding.list.smoothScrollToPosition(0)
         }
 
         binding.swiperefresh.setOnRefreshListener {
