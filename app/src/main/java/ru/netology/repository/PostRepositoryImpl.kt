@@ -1,7 +1,6 @@
 package ru.netology.repository
 
 
-import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -23,26 +22,10 @@ import java.io.IOException
 
 class PostRepositoryImpl(private val dao: PostDao) : PostRepository {
     override val data = dao.getAll()
-        .map(List<PostEntity>::toDto)
-        .flowOn(Dispatchers.Default)
+            .map(List<PostEntity>::toDto)
+            .flowOn(Dispatchers.Default)
 
     override suspend fun getAll() {
-        try {
-            val response = PostsApi.service.getAll()
-            if (!response.isSuccessful) {
-                throw ApiError(response.code(), response.message())
-            }
-
-            val body = response.body() ?: throw ApiError(response.code(), response.message())
-            dao.insert(body.toEntity())
-        } catch (e: IOException) {
-            throw NetworkError
-        } catch (e: Exception) {
-            throw UnknownError
-        }
-    }
-
-    override suspend fun getPostsReadIt() {
         try {
             val response = PostsApi.service.getAll()
             if (!response.isSuccessful) {
@@ -71,8 +54,8 @@ class PostRepositoryImpl(private val dao: PostDao) : PostRepository {
             emit(body.size)
         }
     }
-        .catch { e -> throw AppError.from(e) }
-        .flowOn(Dispatchers.Default)
+            .catch { e -> throw AppError.from(e) }
+            .flowOn(Dispatchers.Default)
 
     override suspend fun save(post: Post) {
         try {
@@ -108,7 +91,7 @@ class PostRepositoryImpl(private val dao: PostDao) : PostRepository {
     override suspend fun upload(upload: MediaUpload): Media {
         try {
             val media = MultipartBody.Part.createFormData(
-                "file", upload.file.name, upload.file.asRequestBody()
+                    "file", upload.file.name, upload.file.asRequestBody()
             )
 
             val response = PostsApi.service.upload(media)
@@ -171,9 +154,27 @@ class PostRepositoryImpl(private val dao: PostDao) : PostRepository {
     }
 
     override suspend fun repostById(id: Long) {
-        TODO("Not yet implemented")
+        try {
+            val response = PostsApi.service.repostById(id)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+
+            val body = response.body() ?: throw ApiError(response.code(), response.message())
+            dao.insert(PostEntity.fromDto(body))
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
     }
+
+    override suspend fun getPostsReadIt() {
+        dao.getPostsReadIt()
+    }
+
 }
+
 
 
 

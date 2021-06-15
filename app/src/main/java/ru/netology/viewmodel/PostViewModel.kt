@@ -1,4 +1,4 @@
-package ru.netology.viewmodel
+    package ru.netology.viewmodel
 
 import android.app.Application
 import android.net.Uri
@@ -21,12 +21,12 @@ import java.io.File
 
 
 private val empty = Post(
-    id = 0,
-    content = "",
-    author = "",
-    authorAvatar = "",
-    likedByMe = false,
-    published = ""
+        id = 0,
+        content = "",
+        author = "",
+        authorAvatar = "",
+        likedByMe = false,
+        published = ""
 )
 
 private val noPhoto = PhotoModel()
@@ -34,7 +34,7 @@ private val noPhoto = PhotoModel()
 class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: PostRepository =
-        PostRepositoryImpl(AppDb.getInstance(context = application).postDao())
+            PostRepositoryImpl(AppDb.getInstance(context = application).postDao())
 
     val data: LiveData<FeedModel> = repository.data
             .map(::FeedModel)
@@ -98,7 +98,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             _postCreated.value = Unit
             viewModelScope.launch {
                 try {
-                    when(_photo.value) {
+                    when (_photo.value) {
                         noPhoto -> repository.save(it)
                         else -> _photo.value?.file?.let { file ->
                             repository.saveWithAttachment(it, MediaUpload(file))
@@ -162,10 +162,14 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         _photo.value = PhotoModel(uri, file)
     }
 
-    fun repostById(id: Long) {
-        TODO()
+    fun repostById(id: Long) = viewModelScope.launch {
+        try {
+            repository.repostById(id)
+            _dataState.value = FeedModelState()
+        } catch (e: Exception) {
+            _dataState.value = FeedModelState(error = true)
+        }
     }
-
 }
 
 
