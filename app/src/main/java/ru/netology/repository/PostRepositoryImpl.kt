@@ -12,7 +12,6 @@ import ru.netology.dto.*
 import ru.netology.entity.PostEntity
 import ru.netology.entity.toDto
 import ru.netology.entity.toEntity
-import ru.netology.enumeration.AttachmentType
 import ru.netology.error.ApiError
 import ru.netology.error.AppError
 import ru.netology.error.NetworkError

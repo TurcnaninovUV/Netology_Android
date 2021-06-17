@@ -77,10 +77,12 @@ class NewPostFragment : Fragment() {
                 .crop()
                 .compress(2048)
                 .galleryOnly()
-                .galleryMimeTypes(arrayOf(
-                    "image/png",
-                    "image/jpeg",
-                ))
+                .galleryMimeTypes(
+                    arrayOf(
+                        "image/png",
+                        "image/jpeg",
+                    )
+                )
                 .start(photoRequestCode)
         }
 

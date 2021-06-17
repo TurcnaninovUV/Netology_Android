@@ -30,4 +30,13 @@
         <item name="android:minWidth">@dimen/icon_button_min_size</item>
         <item name="android:minHeight">@dimen/icon_button_min_size</item>
     </style>
+
+    <style name="Widget.AppTheme.Viewing" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+        <item name="iconTint">?attr/colorControlNormal</item>
+        <item name="rippleColor">@android:color/transparent</item>
+        <item name="android:textColor">?attr/colorControlNormal</item>
+        <item name="android:minWidth">@dimen/icon_button_min_size</item>
+        <item name="android:minHeight">@dimen/icon_button_min_size</item>
+        <item name="android:colorBackground">?attr/colorControlNormal</item>
+    </style>
 </resources>

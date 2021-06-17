@@ -1,7 +1,5 @@
 package ru.netology.dto
 
-import ru.netology.enumeration.AttachmentType
-
 
 data class Post(
         val id: Long,
@@ -17,10 +15,7 @@ data class Post(
         var attachment: Attachment? = null,
 )
 
-data class Attachment(
-        val url: String,
-        val type: AttachmentType,
-)
+
 
 
 

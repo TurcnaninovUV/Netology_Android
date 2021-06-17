@@ -30,4 +30,6 @@
     <string name="description_photo">Фото</string>
     <string name="remove">Удалить</string>
     <string name="menu_save">Сохранить</string>
+    <string name="attachment">Вложение</string>
+    <string name="chooser_repost">Репост</string>
 </resources>

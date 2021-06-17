@@ -8,9 +8,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import ru.netology.BuildConfig
 import ru.netology.R
 import ru.netology.databinding.CardPostBinding
+import ru.netology.dto.AttachmentType
 import ru.netology.dto.Post
+import ru.netology.view.load
+import ru.netology.view.loadCircleCrop
 
 interface OnInteractionListener {
     fun onLike(post: Post) {}
@@ -19,9 +23,10 @@ interface OnInteractionListener {
     fun onShare(post: Post) {}
     fun onPlay(post: Post) {}
     fun onShowPost(post: Post) {}
+    fun onViewImage(post: Post) {}
 }
 
-class PostsAdapter (
+class PostsAdapter(
         private val onInteractionListener: OnInteractionListener
 ) : ListAdapter<Post, PostViewHolder>(PostViewHolder.PostDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -44,9 +49,15 @@ class PostViewHolder(
             author.text = post.author
             published.text = post.published
             content.text = post.content
+            avatar.loadCircleCrop("${BuildConfig.BASE_URL}/avatars/${post.authorAvatar}")
             like.text = reduction(post.likes)
             repost.text = reduction(post.repost)
             like.isChecked = post.likedByMe
+
+            if (post.attachment != null && post.attachment!!.type == AttachmentType.IMAGE) {
+                videoImage.visibility = View.VISIBLE
+                videoImage.load("${BuildConfig.BASE_URL}/media/${post.attachment?.url}")
+            } else videoImage.visibility = View.GONE
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.options_post)
@@ -65,24 +76,24 @@ class PostViewHolder(
                     }
                 }.show()
             }
-            val url = "http://192.168.10.120:9999"
-            // 192.168.0.107 дом
-            // 192.168.10.120 работа
-            Glide.with(avatar)
-                    .load("$url/avatars/${post.authorAvatar}")
-                    .placeholder(R.drawable.ic_loading_100dp)
-                    .error(R.drawable.ic_error_100dp)
-                    .circleCrop()
-                    .timeout(10_000)
-                    .into(binding.avatar)
-            if (post.attachment != null) {
-                Glide.with(videoImage)
-                        .load("$url/images/${post.attachment!!.url}")
-                        .placeholder(R.drawable.ic_loading_100dp)
-                        .error(R.drawable.ic_error_100dp)
-                        .timeout(10_000)
-                        .into(binding.videoImage)
-            } else videoImage.visibility = View.GONE
+//            val url = "http://192.168.10.120:9999"
+//            // 192.168.0.107 дом
+//            // 192.168.10.120 работа
+//            Glide.with(avatar)
+//                    .load("$url/avatars/${post.authorAvatar}")
+//                    .placeholder(R.drawable.ic_loading_100dp)
+//                    .error(R.drawable.ic_error_100dp)
+//                    .circleCrop()
+//                    .timeout(10_000)
+//                    .into(binding.avatar)
+//            if (post.attachment != null) {
+//                Glide.with(videoImage)
+//                        .load("$url/images/${post.attachment!!.url}")
+//                        .placeholder(R.drawable.ic_loading_100dp)
+//                        .error(R.drawable.ic_error_100dp)
+//                        .timeout(10_000)
+//                        .into(binding.videoImage)
+//            } else videoImage.visibility = View.GONE
 
             like.setOnClickListener {
                 onInteractionListener.onLike(post)
@@ -101,6 +112,10 @@ class PostViewHolder(
             }
             content.setOnClickListener {
                 onInteractionListener.onShowPost(post)
+            }
+
+            videoImage.setOnClickListener {
+                onInteractionListener.onViewImage(post)
             }
             if (post.video != null) groupVideo.visibility = View.VISIBLE else groupVideo.visibility = View.GONE
         }

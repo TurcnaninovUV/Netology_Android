@@ -22,11 +22,16 @@ import java.io.File
 
 private val empty = Post(
         id = 0,
-        content = "",
         author = "",
         authorAvatar = "",
+        content = "",
+        published = "",
         likedByMe = false,
-        published = ""
+        likes = 0,
+        repost = 0,
+        video = "",
+        readIt = false,
+        attachment = null
 )
 
 private val noPhoto = PhotoModel()

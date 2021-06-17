@@ -30,4 +30,6 @@
     <string name="description_photo">Photo</string>
     <string name="remove">Remove</string>
     <string name="menu_save">Save</string>
+    <string name="attachment">Attachment</string>
+    <string name="chooser_repost">Repost</string>
 </resources>
