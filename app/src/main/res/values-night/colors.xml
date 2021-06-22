@@ -3,4 +3,6 @@
     <color name="colorPrimary">#DADADA</color>
     <color name="colorPrimaryDark">#444</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="divider_color">#ccc</color>
+    <color name="image_background">#000</color>
 </resources>

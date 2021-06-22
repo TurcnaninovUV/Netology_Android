@@ -18,6 +18,7 @@ import ru.netology.adapter.PostsAdapter
 import ru.netology.databinding.FragmentFeedBinding
 import ru.netology.dto.Post
 import ru.netology.viewmodel.PostViewModel
+import java.io.File
 
 class FeedFragment : Fragment() {
 
@@ -32,7 +33,7 @@ class FeedFragment : Fragment() {
 
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onEdit(post: Post) {
-                findNavController().navigate(R.id.action_feedFragment_to_editPostFragment,
+                findNavController().navigate(R.id.action_fragmentFeed_to_editPostFragment,
                     Bundle().apply
                     {
                         textArg = post.content
@@ -60,9 +61,18 @@ class FeedFragment : Fragment() {
                     Intent.createChooser(intent, getString(R.string.chooser_share_post))
                 startActivity(shareIntent)
             }
+
+            override fun onViewImage(post: Post) {
+                findNavController().navigate(R.id.action_fragmentFeed_to_fragmentImage,
+                    Bundle().apply
+                    {
+                        textArg = post.attachment?.url
+                    })
+            }
+
         })
         binding.list.adapter = adapter
-        viewModel.dataState.observe(viewLifecycleOwner, { state ->
+        viewModel.dataState.observe(viewLifecycleOwner) { state ->
             binding.progress.isVisible = state.loading
             binding.swiperefresh.isRefreshing = state.refreshing
             if (state.error) {
@@ -70,18 +80,34 @@ class FeedFragment : Fragment() {
                     .setAction(R.string.retry_loading) { viewModel.loadPosts() }
                     .show()
             }
-        })
-        viewModel.data.observe(viewLifecycleOwner, { state ->
+        }
+        viewModel.data.observe(viewLifecycleOwner) { state ->
             adapter.submitList(state.posts)
             binding.emptyText.isVisible = state.empty
-        })
+        }
+
+        viewModel.newerCount.observe(viewLifecycleOwner) {
+            if (it > 0) binding.freshPosts.visibility = View.VISIBLE
+        }
+
+        binding.freshPosts.setOnClickListener {
+            viewModel.getPostsReadIt()
+            viewModel.loadPosts()
+            binding.freshPosts.visibility = View.GONE
+            binding.list.smoothScrollToPosition(0)
+        }
 
         binding.swiperefresh.setOnRefreshListener {
             viewModel.refreshPosts()
         }
 
         binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+            findNavController().navigate(R.id.action_fragmentFeed_to_newPostFragment,
+                Bundle().apply
+                {
+                    val file = File(context?.filesDir, "savecontent.json")
+                    if (file.exists()) textArg = file.readText()
+                })
         }
 
         return binding.root

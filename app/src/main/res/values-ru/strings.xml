@@ -25,4 +25,11 @@
     <string name="retry_loading">Повторить</string>
     <string name="empty_posts">Постов нет.\nЕсли создадите новый пост, то он появится здесь</string>
     <string name="network_error">Ошибка соединения сети</string>
+    <string name="description_select_photo">Выбрать фото</string>
+    <string name="description_take_photo">Взять фото</string>
+    <string name="description_photo">Фото</string>
+    <string name="remove">Удалить</string>
+    <string name="menu_save">Сохранить</string>
+    <string name="attachment">Вложение</string>
+    <string name="chooser_repost">Репост</string>
 </resources>

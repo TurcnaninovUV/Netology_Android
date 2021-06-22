@@ -51,11 +51,26 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
         android:contentDescription="@string/add_post"
         android:focusable="true"
-        android:layout_gravity="bottom|end"
         app:srcCompat="@drawable/ic_add_24dp" />
+
+    <Button
+        android:id="@+id/freshPosts"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:layout_margin="@dimen/fab_margin"
+        android:backgroundTint="@android:color/transparent"
+        android:clickable="true"
+        android:contentDescription="@string/add_post"
+        android:focusable="true"
+        android:text="Свежие записи"
+        android:visibility="gone"
+        app:shapeAppearance="?attr/shapeAppearanceSmallComponent" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

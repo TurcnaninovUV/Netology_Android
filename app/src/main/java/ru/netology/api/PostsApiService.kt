@@ -1,13 +1,14 @@
 package ru.netology.api
 
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import ru.netology.BuildConfig
+import ru.netology.dto.Media
 import ru.netology.dto.Post
 
 private const val BASE_URL = "${BuildConfig.BASE_URL}/api/slow/"
@@ -32,6 +33,9 @@ interface PostsApiService {
     @GET("posts")
     suspend fun getAll(): Response<List<Post>>
 
+    @GET("posts/{id}/newer")
+    suspend fun getNewer(@Path("id") id: Long): Response<List<Post>>
+
     @GET("posts/{id}")
     suspend fun getById(@Path("id") id: Long): Response<Post>
 
@@ -49,6 +53,10 @@ interface PostsApiService {
 
     @DELETE("posts/{id}/likes")
     suspend fun dislikeById(@Path("id") id: Long): Response<Post>
+
+    @Multipart
+    @POST("media")
+    suspend fun upload(@Part media: MultipartBody.Part): Response<Media>
 }
 
 object PostsApi {

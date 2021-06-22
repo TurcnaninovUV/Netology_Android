@@ -6,10 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
-import ru.netology.R
 import ru.netology.databinding.FragmentEditPostBinding
 import ru.netology.util.AndroidUtils
 import ru.netology.util.StringArg
