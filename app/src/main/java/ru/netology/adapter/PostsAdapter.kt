@@ -58,9 +58,12 @@ class PostViewHolder(
                 videoImage.visibility = View.VISIBLE
                 videoImage.load("${BuildConfig.BASE_URL}/media/${post.attachment?.url}")
             } else videoImage.visibility = View.GONE
+
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.options_post)
+                    // TODO: if we don't have other options, just remove dots
+                    menu.setGroupVisible(R.id.owned, post.ownedByMe)
                     setOnMenuItemClickListener { item ->
                         when (item.itemId) {
                             R.id.remove -> {
@@ -76,24 +79,6 @@ class PostViewHolder(
                     }
                 }.show()
             }
-//            val url = "http://192.168.10.120:9999"
-//            // 192.168.0.107 дом
-//            // 192.168.10.120 работа
-//            Glide.with(avatar)
-//                    .load("$url/avatars/${post.authorAvatar}")
-//                    .placeholder(R.drawable.ic_loading_100dp)
-//                    .error(R.drawable.ic_error_100dp)
-//                    .circleCrop()
-//                    .timeout(10_000)
-//                    .into(binding.avatar)
-//            if (post.attachment != null) {
-//                Glide.with(videoImage)
-//                        .load("$url/images/${post.attachment!!.url}")
-//                        .placeholder(R.drawable.ic_loading_100dp)
-//                        .error(R.drawable.ic_error_100dp)
-//                        .timeout(10_000)
-//                        .into(binding.videoImage)
-//            } else videoImage.visibility = View.GONE
 
             like.setOnClickListener {
                 onInteractionListener.onLike(post)

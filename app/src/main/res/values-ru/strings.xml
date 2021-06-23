@@ -32,4 +32,15 @@
     <string name="menu_save">Сохранить</string>
     <string name="attachment">Вложение</string>
     <string name="chooser_repost">Репост</string>
+    <string name="sign_in">Вход</string>
+    <string name="sign_up">Регистрация</string>
+    <string name="sign_out">Выход</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="password_confirm">Подтверждение пароля</string>
+    <string name="sign_out_dialog">Вы уверены?</string>
+    <string name="positive_button">ДА</string>
+    <string name="negative_button">НЕТ</string>
+    <string name="auth_name">Имя</string>
+    <string name="error_edit">Не может быть пустым!</string>
 </resources>

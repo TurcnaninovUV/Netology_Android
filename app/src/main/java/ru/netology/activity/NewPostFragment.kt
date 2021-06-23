@@ -27,7 +27,7 @@ class NewPostFragment : Fragment() {
     }
 
     private val viewModel: PostViewModel by viewModels(
-        ownerProducer = ::requireParentFragment
+            ownerProducer = ::requireParentFragment
     )
 
     private var fragmentBinding: FragmentNewPostBinding? = null
@@ -56,42 +56,42 @@ class NewPostFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         val binding = FragmentNewPostBinding.inflate(
-            inflater,
-            container,
-            false
+                inflater,
+                container,
+                false
         )
         fragmentBinding = binding
 
-        arguments?.textArg
-            ?.let(binding.edit::setText)
+        arguments?.textArg?.let(binding.edit::setText)
 
         binding.edit.requestFocus()
+        AndroidUtils.hideKeyboard(binding.edit)
 
         binding.pickPhoto.setOnClickListener {
             ImagePicker.with(this)
-                .crop()
-                .compress(2048)
-                .galleryOnly()
-                .galleryMimeTypes(
-                    arrayOf(
-                        "image/png",
-                        "image/jpeg",
+                    .crop()
+                    .compress(2048)
+                    .galleryOnly()
+                    .galleryMimeTypes(
+                            arrayOf(
+                                    "image/png",
+                                    "image/jpeg",
+                            )
                     )
-                )
-                .start(photoRequestCode)
+                    .start(photoRequestCode)
         }
 
         binding.takePhoto.setOnClickListener {
             ImagePicker.with(this)
-                .crop()
-                .compress(2048)
-                .cameraOnly()
-                .start(cameraRequestCode)
+                    .crop()
+                    .compress(2048)
+                    .cameraOnly()
+                    .start(cameraRequestCode)
         }
 
         binding.removePhoto.setOnClickListener {

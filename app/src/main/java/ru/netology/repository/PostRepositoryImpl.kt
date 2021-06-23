@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import ru.netology.api.*
+import ru.netology.auth.AppAuth
 import ru.netology.dao.PostDao
 import ru.netology.dto.*
 import ru.netology.entity.PostEntity
@@ -170,6 +171,38 @@ class PostRepositoryImpl(private val dao: PostDao) : PostRepository {
 
     override suspend fun getPostsReadIt() {
         dao.getPostsReadIt()
+    }
+
+    override suspend fun authentication(login: String, pass: String) {
+        try {
+            val response = PostsApi.service.updateUser(login, pass)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            val authState = response.body() ?: throw ApiError(response.code(), response.message())
+            authState.token?.let { AppAuth.getInstance().setAuth(authState.id, it) }
+
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+    override suspend fun registration(name: String, login: String, pass: String) {
+        try {
+            val response = PostsApi.service.registrationUser(name, login, pass)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            val authState = response.body() ?: throw ApiError(response.code(), response.message())
+            authState.token?.let { AppAuth.getInstance().setAuth(authState.id, it) }
+
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
     }
 
 }
