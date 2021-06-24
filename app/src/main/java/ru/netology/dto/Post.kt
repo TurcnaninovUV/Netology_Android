@@ -3,6 +3,7 @@ package ru.netology.dto
 
 data class Post(
         val id: Long,
+        val authorId: Long,
         val author: String,
         val authorAvatar: String,
         val content: String,
@@ -13,6 +14,7 @@ data class Post(
         val video: String? = null,
         val readIt : Boolean = false,
         var attachment: Attachment? = null,
+        val ownedByMe: Boolean = false,
 )
 
 

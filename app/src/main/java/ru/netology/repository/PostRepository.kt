@@ -17,6 +17,8 @@ interface PostRepository {
     suspend fun dislikeById(id: Long)
     suspend fun repostById(id: Long)
     suspend fun upload(upload: MediaUpload): Media
+    suspend fun authentication(login: String, pass: String)
+    suspend fun registration(name: String, login: String, pass: String)
 
 }
 
