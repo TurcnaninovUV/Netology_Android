@@ -1,6 +1,8 @@
 package ru.netology.repository
 
 
+import androidx.core.net.toFile
+import androidx.core.net.toUri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -9,8 +11,10 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import ru.netology.api.*
 import ru.netology.auth.AppAuth
 import ru.netology.dao.PostDao
+import ru.netology.dao.PostWorkDao
 import ru.netology.dto.*
 import ru.netology.entity.PostEntity
+import ru.netology.entity.PostWorkEntity
 import ru.netology.entity.toDto
 import ru.netology.entity.toEntity
 import ru.netology.error.ApiError
@@ -20,7 +24,10 @@ import ru.netology.error.UnknownError
 import java.io.IOException
 
 
-class PostRepositoryImpl(private val dao: PostDao) : PostRepository {
+class PostRepositoryImpl(
+    private val dao: PostDao,
+    private val postWorkDao: PostWorkDao
+) : PostRepository {
     override val data = dao.getAll()
             .map(List<PostEntity>::toDto)
             .flowOn(Dispatchers.Default)
@@ -203,6 +210,26 @@ class PostRepositoryImpl(private val dao: PostDao) : PostRepository {
         } catch (e: Exception) {
             throw UnknownError
         }
+    }
+
+    override suspend fun saveWork(post: Post, upload: MediaUpload?): Long =
+    postWorkDao.insert(PostWorkEntity.fromDto(post, upload?.file?.toUri()?.toString()))
+
+
+    override suspend fun processWork(id: Long) {
+        val postToUpload = postWorkDao.getById(id).toDto()
+        if (postToUpload.attachment == null) {
+            val response = Api.service.save(postToUpload)
+            val body = response.body() ?: throw ApiError(response.code(), response.message())
+            dao.insert(PostEntity.fromDto(body))
+        } else {
+            val media = upload(MediaUpload(postToUpload.attachment!!.url.toUri().toFile()))
+            val postWithAttachment = postToUpload.copy(attachment = Attachment(media.id, AttachmentType.IMAGE))
+            val response = Api.service.save(postWithAttachment)
+            val body = response.body() ?: throw ApiError(response.code(), response.message())
+            dao.insert(PostEntity.fromDto(body))
+        }
+        postWorkDao.removeById(id)
     }
 
 }

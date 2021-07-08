@@ -9,59 +9,59 @@ import ru.netology.dto.Post
 
 @Entity
 data class PostEntity(
-        @PrimaryKey(autoGenerate = true)
-        val id: Long,
-        val authorId: Long,
-        val author: String,
-        val authorAvatar: String,
-        val content: String,
-        val published: String,
-        val likes: Int = 0,
-        val repost: Int = 0,
-        val likedByMe: Boolean,
-        val video: String?,
-        val readIt: Boolean = false,
-        @Embedded
-        var attachment: AttachmentEmbeddable?,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long,
+    val authorId: Long,
+    val author: String,
+    val authorAvatar: String,
+    val content: String,
+    val published: String,
+    val likes: Int = 0,
+    val repost: Int = 0,
+    val likedByMe: Boolean,
+    val video: String?,
+    val readIt: Boolean = false,
+    @Embedded
+    var attachment: AttachmentEmbeddable?,
 ) {
     fun toDto() =
-            Post(
-                    id,
-                    authorId,
-                    author,
-                    authorAvatar,
-                    content,
-                    published,
-                    likes,
-                    repost,
-                    likedByMe,
-                    video,
-                    readIt,
-                    attachment?.toDto()
-            )
+        Post(
+            id,
+            authorId,
+            author,
+            authorAvatar,
+            content,
+            published,
+            likes,
+            repost,
+            likedByMe,
+            video,
+            readIt,
+            attachment?.toDto()
+        )
 
     companion object {
         fun fromDto(dto: Post) =
-                PostEntity(
-                        dto.id,
-                        dto.authorId,
-                        dto.author,
-                        dto.authorAvatar,
-                        dto.content,
-                        dto.published,
-                        dto.likes,
-                        dto.repost,
-                        dto.likedByMe,
-                        dto.video,
-                        dto.readIt,
-                        AttachmentEmbeddable.fromDto(dto.attachment)
-                )
+            PostEntity(
+                dto.id,
+                dto.authorId,
+                dto.author,
+                dto.authorAvatar,
+                dto.content,
+                dto.published,
+                dto.likes,
+                dto.repost,
+                dto.likedByMe,
+                dto.video,
+                dto.readIt,
+                AttachmentEmbeddable.fromDto(dto.attachment)
+            )
     }
 }
 
 data class AttachmentEmbeddable(
-        var url: String,
-        var type: AttachmentType,
+    var url: String,
+    var type: AttachmentType,
 ) {
     fun toDto() = Attachment(url, type)
 
