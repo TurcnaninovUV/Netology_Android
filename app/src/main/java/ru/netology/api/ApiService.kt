@@ -1,4 +1,4 @@
-package ru.netology.api
+    package ru.netology.api
 
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -12,8 +12,9 @@ import ru.netology.auth.AppAuth
 import ru.netology.auth.AuthState
 import ru.netology.dto.Media
 import ru.netology.dto.Post
+import ru.netology.dto.PushToken
 
-private const val BASE_URL = "${BuildConfig.BASE_URL}/api/slow/"
+    private const val BASE_URL = "${BuildConfig.BASE_URL}/api/slow/"
 
 private val logging = HttpLoggingInterceptor().apply {
     if (BuildConfig.DEBUG) {
@@ -71,14 +72,22 @@ interface PostsApiService {
 
     @FormUrlEncoded
     @POST("users/authentication")
-    suspend fun updateUser(@Field("login") login: String, @Field("pass") pass: String): Response<AuthState>
+    suspend fun updateUser(
+        @Field("login") login: String,
+        @Field("pass") pass: String): Response<AuthState>
 
     @FormUrlEncoded
     @POST("users/registration")
-    suspend fun registrationUser(@Field("name") name: String, @Field("login") login: String, @Field("pass") pass: String): Response<AuthState>
+    suspend fun registrationUser(
+        @Field("name") name: String,
+        @Field("login") login: String,
+        @Field("pass") pass: String): Response<AuthState>
+
+    @POST("users/push-tokens")
+    suspend fun save(@Body pushToken: PushToken): Response<Unit>
 }
 
-object PostsApi {
+object Api {
     val service: PostsApiService by lazy {
         retrofit.create(PostsApiService::class.java)
     }
