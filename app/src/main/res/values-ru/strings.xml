@@ -43,4 +43,5 @@
     <string name="negative_button">НЕТ</string>
     <string name="auth_name">Имя</string>
     <string name="error_edit">Не может быть пустым!</string>
+    <string name="notification_user">Пользователь %1$s получил уведомление %2$s</string>
 </resources>
