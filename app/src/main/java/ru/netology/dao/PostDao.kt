@@ -7,7 +7,7 @@ import ru.netology.entity.PostEntity
 
 @Dao
 interface PostDao {
-    @Query("SELECT * FROM PostEntity WHERE readIt = 0 ORDER BY id DESC")
+    @Query("SELECT * FROM PostEntity ORDER BY id DESC")
     fun getAll(): Flow<List<PostEntity>>
 
     @Query("UPDATE PostEntity SET readIt = 1 WHERE readIt = 0")
