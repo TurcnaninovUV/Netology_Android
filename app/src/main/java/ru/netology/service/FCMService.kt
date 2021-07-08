@@ -41,6 +41,7 @@ class FCMService : FirebaseMessagingService() {
         val id = AppAuth.getInstance().authStateFlow.value.id
         val recipientId = message.data["recipientId"]?.toLong()
         when (recipientId) {
+            0L -> AppAuth.getInstance().sendPushToken()
             id, null -> handleMessage(gson.fromJson(message.data[content], PushMessage::class.java))
             else -> AppAuth.getInstance().sendPushToken()
         }
