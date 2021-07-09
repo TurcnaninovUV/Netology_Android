@@ -1,8 +1,10 @@
-    package ru.netology.viewmodel
+package ru.netology.viewmodel
 
 import android.app.Application
 import android.net.Uri
+import androidx.core.net.toFile
 import androidx.lifecycle.*
+import androidx.work.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
@@ -19,22 +21,24 @@ import ru.netology.model.PhotoModel
 import ru.netology.repository.PostRepository
 import ru.netology.repository.PostRepositoryImpl
 import ru.netology.util.SingleLiveEvent
+import ru.netology.work.RemovePostWorker
+import ru.netology.work.SavePostWorker
 import java.io.File
 
 
 private val empty = Post(
-        id = 0,
-        authorId = 0,
-        author = "",
-        authorAvatar = "",
-        content = "",
-        published = "",
-        likedByMe = false,
-        likes = 0,
-        repost = 0,
-        video = "",
-        readIt = false,
-        attachment = null
+    id = 0,
+    authorId = 0,
+    author = "",
+    authorAvatar = "",
+    content = "",
+    published = "",
+    likedByMe = false,
+    likes = 0,
+    repost = 0,
+    video = "",
+    readIt = false,
+    attachment = null
 )
 
 private val noPhoto = PhotoModel()
@@ -42,19 +46,25 @@ private val noPhoto = PhotoModel()
 class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: PostRepository =
-            PostRepositoryImpl(AppDb.getInstance(context = application).postDao())
+        PostRepositoryImpl(
+            AppDb.getInstance(context = application).postDao(),
+            AppDb.getInstance(context = application).postWorkDao(),
+        )
+
+    private val workManager: WorkManager =
+        WorkManager.getInstance(application)
 
     val data: LiveData<FeedModel> = AppAuth.getInstance()
-            .authStateFlow
-            .flatMapLatest { (myId, _) ->
-                repository.data
-                        .map { posts ->
-                            FeedModel(
-                                    posts.map { it.copy(ownedByMe = it.authorId == myId) },
-                                    posts.isEmpty()
-                            )
-                        }
-            }.asLiveData(Dispatchers.Default)
+        .authStateFlow
+        .flatMapLatest { (myId, _) ->
+            repository.data
+                .map { posts ->
+                    FeedModel(
+                        posts.map { it.copy(ownedByMe = it.authorId == myId) },
+                        posts.isEmpty()
+                    )
+                }
+        }.asLiveData(Dispatchers.Default)
 
     private val _dataState = MutableLiveData<FeedModelState>()
     val dataState: LiveData<FeedModelState>
@@ -62,8 +72,8 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     val newerCount: LiveData<Int> = data.switchMap {
         repository.getNewerCount(it.posts.firstOrNull()?.id ?: 0L)
-                .catch { e -> e.printStackTrace() }
-                .asLiveData()
+            .catch { e -> e.printStackTrace() }
+            .asLiveData()
     }
 
     private val edited = MutableLiveData(empty)
@@ -115,14 +125,22 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             _postCreated.value = Unit
             viewModelScope.launch {
                 try {
-                    when (_photo.value) {
-                        noPhoto -> repository.save(it)
-                        else -> _photo.value?.file?.let { file ->
-                            repository.saveWithAttachment(it, MediaUpload(file))
-                        }
-                    }
+                    val id = repository.saveWork(
+                        it, _photo.value?.uri?.let { MediaUpload(it.toFile()) }
+                    )
+                    val data = workDataOf(SavePostWorker.postKey to id)
+                    val constraints = Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build()
+                    val request = OneTimeWorkRequestBuilder<SavePostWorker>()
+                        .setInputData(data)
+                        .setConstraints(constraints)
+                        .build()
+                    workManager.enqueue(request)
+
                     _dataState.value = FeedModelState()
                 } catch (e: Exception) {
+                    e.printStackTrace()
                     _dataState.value = FeedModelState(error = true)
                 }
             }
@@ -131,14 +149,27 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         _photo.value = noPhoto
     }
 
-    fun removeById(id: Long) = viewModelScope.launch {
-        try {
-            repository.removeById(id)
-            _dataState.value = FeedModelState()
-        } catch (e: Exception) {
-            _dataState.value = FeedModelState(error = true)
+    fun removeById(id: Long) {
+        val posts = data.value?.posts.orEmpty()
+            .filter { it.id != id }
+        data.value?.copy(posts = posts, empty = posts.isEmpty())
+
+        viewModelScope.launch {
+            try {
+                val data = workDataOf(RemovePostWorker.name to id)
+                val constraints = Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build()
+                val request = OneTimeWorkRequestBuilder<RemovePostWorker>()
+                    .setInputData(data)
+                    .setConstraints(constraints)
+                    .build()
+                workManager.enqueue(request)
+
+            } catch (e: Exception) {
+                _dataState.value = FeedModelState(error = true)
+            }
         }
-        refreshPosts()
     }
 
     fun edit(post: Post) {

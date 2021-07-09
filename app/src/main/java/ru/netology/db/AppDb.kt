@@ -1,20 +1,21 @@
 package ru.netology.db
 
 import android.content.Context
-import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import ru.netology.dao.Converters
 import ru.netology.dao.PostDao
+import ru.netology.dao.PostWorkDao
 import ru.netology.entity.PostEntity
+import ru.netology.entity.PostWorkEntity
 
-@Database(entities = [PostEntity::class], version = 1, exportSchema = false)
+@Database(entities = [PostEntity::class, PostWorkEntity::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDb : RoomDatabase() {
     abstract fun postDao(): PostDao
+    abstract fun postWorkDao(): PostWorkDao
 
     companion object {
         @Volatile
@@ -28,7 +29,7 @@ abstract class AppDb : RoomDatabase() {
 
         private fun buildDatabase(context: Context) =
             Room.databaseBuilder(context, AppDb::class.java, "app.db")
-                //  .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
                 .build()
     }
 }
