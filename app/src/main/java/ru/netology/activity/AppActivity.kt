@@ -10,16 +10,28 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
+import com.google.firebase.FirebaseApp
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
+import dagger.hilt.android.AndroidEntryPoint
 //import com.google.android.gms.common.GoogleApiAvailability
 //import com.google.firebase.iid.FirebaseInstanceId
 import ru.netology.R
 import ru.netology.activity.NewPostFragment.Companion.textArg
 import ru.netology.auth.AppAuth
+import ru.netology.service.FirebaseModule
 import ru.netology.viewmodel.AuthViewModel
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class AppActivity : AppCompatActivity(R.layout.activity_app) {
+
+    @Inject
+    lateinit var auth: AppAuth
+
+    @Inject
+    lateinit var firebase: FirebaseModule
 
     private val viewModel: AuthViewModel by viewModels()
 
@@ -46,7 +58,16 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
                 )
         }
 
-//        checkGoogleApiAvailability()
+        firebase.provideFirebase().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                println("some stuff happend: ${task.exception}")
+                return@addOnCompleteListener
+            }
+            val token = task.result
+            println(token)
+        }
+
+        firebase.provideCheckGoogleApiAvailability(this, this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -71,37 +92,18 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
             }
             R.id.signout -> {
                 AlertDialog.Builder(this)
-                        .setMessage(R.string.sign_out_dialog)
-                        .setPositiveButton(R.string.positive_button) { dialog, id ->
-                            AppAuth.getInstance().removeAuth()
-                            findNavController(R.id.nav_host_fragment).navigateUp()
-                        }
-                        .setNegativeButton(R.string.negative_button) {dialog, id ->
-                            return@setNegativeButton
-                        }
-                        .show()
+                    .setMessage(R.string.sign_out_dialog)
+                    .setPositiveButton(R.string.positive_button) { dialog, id ->
+                        auth.removeAuth()
+                        findNavController(R.id.nav_host_fragment).navigateUp()
+                    }
+                    .setNegativeButton(R.string.negative_button) { dialog, id ->
+                        return@setNegativeButton
+                    }
+                    .show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-//    private fun checkGoogleApiAvailability() {
-//        with(GoogleApiAvailability.getInstance()) {
-//            val code = isGooglePlayServicesAvailable(this@AppActivity)
-//            if (code == ConnectionResult.SUCCESS) {
-//                return@with
-//            }
-//            if (isUserResolvableError(code)) {
-//                getErrorDialog(this@AppActivity, code, 9000).show()
-//                return
-//            }
-//            Toast.makeText(this@AppActivity, R.string.google_play_unavailable, Toast.LENGTH_LONG)
-//                .show()
-//        }
-//
-//        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
-//            println(it.token)
-//        }
-//    }
 }
