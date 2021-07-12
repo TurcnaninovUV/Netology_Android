@@ -14,10 +14,13 @@ import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import ru.netology.R
 import ru.netology.auth.AppAuth
+import javax.inject.Inject
 import kotlin.random.Random
 
 
-class FCMService : FirebaseMessagingService() {
+class FCMService @Inject constructor(
+    private val auth: AppAuth
+) : FirebaseMessagingService() {
     private val action = "action"
     private val content = "content"
     private val channelId = "remote"
@@ -38,17 +41,17 @@ class FCMService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
-        val id = AppAuth.getInstance().authStateFlow.value.id
+        val id = auth.authStateFlow.value.id
         val recipientId = message.data["recipientId"]?.toLong()
         when (recipientId) {
-            0L -> AppAuth.getInstance().sendPushToken()
+            0L -> auth.sendPushToken()
             id, null -> handleMessage(gson.fromJson(message.data[content], PushMessage::class.java))
-            else -> AppAuth.getInstance().sendPushToken()
+            else -> auth.sendPushToken()
         }
     }
 
     override fun onNewToken(token: String) {
-        AppAuth.getInstance().sendPushToken(token)
+        auth.sendPushToken(token)
         Log.d(TAG, "Refreshed token: $token")
     }
 

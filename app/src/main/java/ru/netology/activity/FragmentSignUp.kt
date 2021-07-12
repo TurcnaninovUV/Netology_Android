@@ -9,10 +9,13 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.databinding.FragmentSignUpBinding
 import ru.netology.util.AndroidUtils
 import ru.netology.viewmodel.AuthViewModel
 
+
+@AndroidEntryPoint
 class FragmentSignUp : Fragment() {
     private val viewModelAuth: AuthViewModel by viewModels(ownerProducer = ::requireParentFragment)
 

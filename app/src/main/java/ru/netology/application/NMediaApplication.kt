@@ -2,15 +2,24 @@ package ru.netology.application
 
 import android.app.Application
 import androidx.work.*
+import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.netology.auth.AppAuth
 import ru.netology.work.RefreshPostsWorker
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
+
+@HiltAndroidApp
 class NMediaApplication : Application() {
     private val appScope = CoroutineScope(Dispatchers.Default)
+
+    @Inject
+    lateinit var auth: AppAuth
+    @Inject
+    lateinit var workManager: WorkManager
 
     override fun onCreate() {
         super.onCreate()
@@ -20,7 +29,7 @@ class NMediaApplication : Application() {
 
     private fun setupAuth() {
         appScope.launch {
-            AppAuth.initApp(this@NMediaApplication)
+            auth.sendPushToken()
         }
     }
 
@@ -32,7 +41,7 @@ class NMediaApplication : Application() {
             val request = PeriodicWorkRequestBuilder<RefreshPostsWorker>(15, TimeUnit.MINUTES)
                 .setConstraints(constraints)
                 .build()
-            WorkManager.getInstance(this@NMediaApplication).enqueueUniquePeriodicWork(
+            workManager.enqueueUniquePeriodicWork(
                 RefreshPostsWorker.name,
                 ExistingPeriodicWorkPolicy.KEEP,
                 request

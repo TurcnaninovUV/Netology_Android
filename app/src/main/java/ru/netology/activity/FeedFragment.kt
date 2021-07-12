@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.R
 import ru.netology.activity.NewPostFragment.Companion.textArg
 import ru.netology.adapter.OnInteractionListener
@@ -20,6 +21,8 @@ import ru.netology.dto.Post
 import ru.netology.viewmodel.PostViewModel
 import java.io.File
 
+
+@AndroidEntryPoint
 class FeedFragment : Fragment() {
 
     private val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
